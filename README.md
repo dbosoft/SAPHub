@@ -46,7 +46,7 @@ Once it is finished the data can be requested with `/Company/result/<operationId
 
 ### SAP Connector Module
 
-The SAP connector module will be used to establish the connection to the SAP system. The sample data used here is returned from our internal IDES system. 
+The SAP connector module will be used to establish the connection to the SAP system. For development we used our internal ERP EHP 8 IDES system, but it should work with almost any ERP or S/4 system.
 
 To setup the SAP Connector Module you have to provide the connection settings. If you cloned the project you should use [User Secrets](https://blog.elmah.io/asp-net-core-not-that-secret-user-secrets-explained/). But you can also use the [appsetings.json](https://github.com/dbosoft/SAPHub/blob/main/src/SAPHub.Server/appsettings.json) to set the connection settings. 
 
