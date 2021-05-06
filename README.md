@@ -5,12 +5,16 @@ This is a sample application to demonstrate how you can combine [Hosuto](https:/
 
 # Usage
 
+This sample uses [Hosuto](https://github.com/dbosoft/Hosuto) for building microservices that can be either combined in one process or run standalone. 
+So the application can be either be fully distributed (and scaled) or run as a single process. Hosuto calls the microservice implementation **Module**, and the microservice runtime process **App**:
+
+
 # Apps
 
 The SAPHub comes with 3 pre-build applications:
 - **SAPHub.Server**
   
-  This is the "all-in-one" server, that both runs the API Module and SAP Connector Module. It requires no additional Message Bus system.
+  This is the "all-in-one" server, that both runs the API Module and SAP Connector Module. It requires no additional Message Bus system and runs only as a console app on Windows. 
 
 - **SAPHub.ApiEndpoint**
   
