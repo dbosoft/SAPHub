@@ -42,7 +42,10 @@ This operation id can be used to query the status of operation.
 ```
 
 Once it is finished the data can be requested with `/Company/result/<operationId>`
-  
+
+**Please note:**
+For simplification the API Module / API Endpoint is currently not fully horizontal scaleable. 
+Each instance of the API Module keeps it's own copy of operation states in memory. For a production implementation the state should be shared/stored in a database. 
 
 ### SAP Connector Module
 
