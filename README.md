@@ -14,7 +14,7 @@ It is strongly recommended to use a current Visual Studio 2019. If you would lik
 
 Please note that to build and run this project you have to download the SAP Netweaver RFC SDK from the SAP Support Portal. 
 Please see the requirements section for YaNco how to obtain the SDK: https://github.com/dbosoft/YaNco#platforms--prerequisites 
-
+You have to download both the Windows and Linux x64 Netweaver RFC SDK.
 
 
 # Usage
