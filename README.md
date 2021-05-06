@@ -71,3 +71,16 @@ Example:
   }
 }
 ```
+
+## Message Bus
+The API Module and the SAP Connector module communicate asynchronously via a message bus. The following messages buses are currently supported:
+
+### Azure Queues
+   TBD
+   
+### Azure Service Bus
+   TBD
+   
+### RabbitMq
+   TBD
+   
