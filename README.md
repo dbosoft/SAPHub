@@ -20,7 +20,7 @@ The SAPHub comes with 3 pre-build applications:
 - **SAPHub.SAPConnectorService**
   
   The SAPConnector Service runs only the SAPConnector Module. 
-  You can run it on a on-premise Windows server (or client) that has direct network access to the SAP system.
+  You can run it on a on-premise Windows system that has direct network access to the SAP system.
   To communicate with the API Module it requires a Message Bus system to be set up.
 
 
