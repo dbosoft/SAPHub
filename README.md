@@ -3,13 +3,26 @@ A sample implementation for Husuto and YaNco
 
 This is a sample application to demonstrate how you can combine [Hosuto](https://github.com/dbosoft/Hosuto) and [YaNco](https://github.com/dbosoft/YaNco) to build a reliable and scaleable service with SAP backend integration.
 
+
+# Requirements
+
+**Visual Studio 2019**
+
+It is strongly recommended to use a current Visual Studio 2019. If you would like to try the docker or azure integration also the docker/azure tools have to be installed.
+
+**SAP RFC SDK**
+
+Please note that to build and run this project you have to download the SAP Netweaver RFC SDK from the SAP Support Portal. 
+Please see the requirements section for YaNco how to obtain the SDK: https://github.com/dbosoft/YaNco#platforms--prerequisites 
+
+
+
 # Usage
 
 This sample uses [Hosuto](https://github.com/dbosoft/Hosuto) for building microservices that can be either combined in one process or run standalone. 
 So the application can be either be fully distributed (and scaled) or run as a single process. Hosuto calls the microservice implementation **Module**, and the microservice runtime process **App**:
 
-
-# Apps
+## Apps
 
 The SAPHub comes with 3 pre-build applications:
 - **SAPHub.Server**
@@ -26,6 +39,7 @@ The SAPHub comes with 3 pre-build applications:
   The SAPConnector Service runs only the SAPConnector Module. 
   You can run it on a on-premise Windows system that has direct network access to the SAP system.
   To communicate with the API Module it requires a Message Bus system to be set up.
+
 
 
 ## Modules
