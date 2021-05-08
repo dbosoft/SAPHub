@@ -38,6 +38,7 @@ This is the "all-in-one" server, that both runs the API Module and SAP Connector
 **Quickstart:**  
 To run this application from Visual Studio first configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.Server**.  
 Then start **SAPHub.Server** project and navigate to http://localhost:62089/api to access the Api.Endpoint.
+&nbsp;
 
 ### SAPHub.ApiEndpoint
   
@@ -47,6 +48,7 @@ To communicate with the SAP Connector Module it requires a message exchange syst
 **Quickstart:**  
 You can start this app together with SAPHub.Connector and RabbitMq as message exchange using docker compose. See [Quickstart for SAPHub.SAPConnector](#saphubsapconnector). 
 For other setups please check [configuration](#configuration) section below. 
+&nbsp;
 
 ### SAPHub.SAPConnector
   
@@ -63,6 +65,7 @@ You can start this app together with SAPHub.ApiEndpoint and RabbitMq as message 
 This will automatically start docker containers running rabbitmq, SAPHub.ApiEndpoint and SAPHub.SAPConnector.
 
 For other setups please check [configuration](#configuration) section below.  
+&nbsp;
 
 
 ## Modules
@@ -95,6 +98,7 @@ Once it is finished the data can be requested with `/Company/result/<operationId
 **Scaling**  
 To scale the API Module horizontally you have to enable the cosmos db storage.  
 Reason: when a SAP Connector sends a status event update only one API Endpoint will process the changes and update it's state store. Therefore all API Module instances have to use the same state store. 
+&nbsp;
 
 ### SAP Connector Module
 
