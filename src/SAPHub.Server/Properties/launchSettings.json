@@ -2,9 +2,12 @@
   "profiles": {
     "SAPHub.Server": {
       "commandName": "Project",
+      "launchBrowser": true,
+      "launchUrl": "http://localhost:62089/",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "http://localhost:62089/"
     },
     "Docker": {
       "commandName": "Docker"

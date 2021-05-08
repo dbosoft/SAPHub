@@ -35,12 +35,14 @@ namespace SAPHub
                 .UseServiceCollection(services)
                 .UseAspNetCoreWithDefaults((module, webHostBuilder) =>
                 {
+                    webHostBuilder.UseStaticWebAssets();
 #pragma warning disable CA1416
                     webHostBuilder.UseHttpSys(options => { options.UrlPrefixes.Add($"{BasePath}{module.Path}"); })
                         .UseUrls($"{BasePath}{module.Path}");
 #pragma warning restore CA1416
                 })
                 .HostModule<ApiModule.ApiModule>()
+                .HostModule<UI.UIModule>()
                 .HostModule<SAPConnectorModule>()
                 .ConfigureHostConfiguration(config => config
                     .AddInMemoryCollection(busSettings)
