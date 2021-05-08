@@ -1,6 +1,4 @@
 # SAPHub
-A sample implementation for Husuto and YaNco
-
 This is a sample application to demonstrate how you can combine [Hosuto](https://github.com/dbosoft/Hosuto) and [YaNco](https://github.com/dbosoft/YaNco) to build a reliable and scaleable service with SAP backend integration.
 
 
