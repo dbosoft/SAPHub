@@ -53,7 +53,7 @@ For other setups please check [configuration](#configuration) section below.
 ### SAPHub.SAPConnector
   
 The SAPConnector Service runs only the SAPConnector Module. 
-You can run only in a network that has direct access to the SAP system.
+It can run separated from all other components and needs only network access to the message exchange and to the SAP system.
 To communicate with the API Module it requires a message exchange to be set up ([see below](#message-exchanges)).
 
 **Quickstart:**  
