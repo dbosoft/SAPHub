@@ -31,7 +31,7 @@ namespace SAPHub.Connector
                     .Options(x =>
                     {
                         x.SimpleRetryStrategy();
-                        x.SetNumberOfWorkers(5);
+                        x.SetNumberOfWorkers(2);
                     })
                     .Subscriptions(s => sp.GetRequiredService<IRebusSubscriptionConfigurer>().Configure(s))
                     .Serialization(x => x.UseNewtonsoftJson(new JsonSerializerSettings
