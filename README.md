@@ -38,6 +38,7 @@ This is the "all-in-one" server, that both runs the API Module and SAP Connector
 **Quickstart:**  
 To run this application from Visual Studio first configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.Server**.  
 Then start **SAPHub.Server** project and navigate to http://localhost:62089/api to access the Api.Endpoint.
+
 &nbsp;
 
 ### SAPHub.ApiEndpoint
@@ -48,6 +49,7 @@ To communicate with the SAP Connector Module it requires a message exchange syst
 **Quickstart:**  
 You can start this app together with SAPHub.Connector and RabbitMq as message exchange using docker compose. See [Quickstart for SAPHub.SAPConnector](#saphubsapconnector). 
 For other setups please check [configuration](#configuration) section below. 
+
 &nbsp;
 
 ### SAPHub.SAPConnector
@@ -114,6 +116,8 @@ The SAP connector module will be used to establish the connection to the SAP sys
 The SAP Connector can be scaled freely.  
 Keep in mind that each SAP Connector will use up to 3 connections (2 processors, 1 for metadata) at same time to backend, so do not overload the backend SAP system with to many connectors. 
 
+&nbsp;
+
 ## Configuration
 
 The apps are configured by .NET configuration settings.
@@ -161,7 +165,6 @@ For the SAP Connector Module you have to configure the SAP connection.
 }
 ```
 
-&nbsp;
 
 ### Message Exchanges
 The API Module and the SAP Connector module communicate asynchronously via a message exchange. The following messages exchanges are supported:
