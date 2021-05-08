@@ -204,8 +204,8 @@ Please note that you can also use the CosmosDB emulator to run this locally.
 Even if this is only a sample implementation we will continue to maintain it as reference architecture. You are welcome to contribute enhancements or to report issues. 
 
 
-#License
+# License
 The code of this sample is licensed under the MIT License - see the LICENSE file for details. Feel free to use it in any application.
 
-#Trademark notice
+# Trademark notice
 SAP, Netweaver are trademarks of SAP SE
