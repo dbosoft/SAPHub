@@ -65,6 +65,7 @@ You can start this app together with SAPHub.ApiEndpoint and RabbitMq as message 
 This will automatically start docker containers running rabbitmq, SAPHub.ApiEndpoint and SAPHub.SAPConnector.
 
 For other setups please check [configuration](#configuration) section below.  
+
 &nbsp;
 
 
@@ -98,6 +99,7 @@ Once it is finished the data can be requested with `/Company/result/<operationId
 **Scaling**  
 To scale the API Module horizontally you have to enable the cosmos db storage.  
 Reason: when a SAP Connector sends a status event update only one API Endpoint will process the changes and update it's state store. Therefore all API Module instances have to use the same state store. 
+
 &nbsp;
 
 ### SAP Connector Module
@@ -159,6 +161,7 @@ For the SAP Connector Module you have to configure the SAP connection.
 }
 ```
 
+&nbsp;
 
 ### Message Exchanges
 The API Module and the SAP Connector module communicate asynchronously via a message exchange. The following messages exchanges are supported:
@@ -203,6 +206,8 @@ Please note that you can also use the CosmosDB emulator to run this locally.
   ``` json
   { "cosmosdb" : { "databaseName" : "<your_db_name>", "connectionstring": "" } }
   ``` 
+
+&nbsp;
 
 # Contribute
 Even if this is only a sample implementation we will continue to maintain it as reference architecture. You are welcome to contribute enhancements or to report issues. 
