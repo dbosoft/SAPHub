@@ -1,0 +1,42 @@
+version: '3.4'
+
+networks:
+  internal:
+
+services:
+  rabbit:
+    command:
+      - rabbitmq-server
+    container_name: rabbitmq
+    hostname: rabbit
+    image: rabbitmq:3-management
+    ports:
+      - 8080:15672/tcp
+      - 5672:5672/tcp
+    networks:
+      - internal
+  saphub.apiendpoint:
+    image: ${DOCKER_REGISTRY-}saphubapiendpoint
+    build:
+      context: .
+      dockerfile: src/SAPHub.ApiEndpoint/Dockerfile
+    environment:
+      - SAPHUB_BUS__TYPE=rabbitmq
+      - SAPHUB_BUS__CONNECTIONSTRING=amqp://guest:guest@rabbit
+    depends_on:
+      - rabbit
+    networks:
+      - internal
+
+  saphub.sapconnector:
+    image: ${DOCKER_REGISTRY-}saphubsapconnector
+    build:
+      context: .
+      dockerfile: src/SAPHub.SAPConnector/Dockerfile
+    environment:
+      - SAPHUB_BUS__TYPE=rabbitmq
+      - SAPHUB_BUS__CONNECTIONSTRING=amqp://guest:guest@localhost
+      - LD_LIBRARY_PATH=/app/
+    depends_on:
+      - rabbit
+    network_mode: host

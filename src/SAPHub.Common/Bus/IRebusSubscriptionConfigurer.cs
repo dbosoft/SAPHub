@@ -1,10 +1,10 @@
 ﻿using Rebus.Config;
 using Rebus.Subscriptions;
 
-namespace SAPHub
+namespace SAPHub.Bus
 {
     public interface IRebusSubscriptionConfigurer
     {
-        void Configure(StandardConfigurer<ISubscriptionStorage> timeoutManager);
+        void Configure(StandardConfigurer<ISubscriptionStorage> configure);
     }
 }

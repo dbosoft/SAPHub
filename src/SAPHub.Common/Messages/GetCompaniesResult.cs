@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.NetworkInformation;
-
-namespace SAPHub
+﻿namespace SAPHub.Messages
 {
     public class CompanyData
     {

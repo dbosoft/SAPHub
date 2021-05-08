@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SAPHub
+namespace SAPHub.Messages
 {
     public class OperationCommand
     {

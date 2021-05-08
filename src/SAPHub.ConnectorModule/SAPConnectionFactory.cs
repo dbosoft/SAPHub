@@ -22,6 +22,8 @@ namespace SAPHub.Connector
         {
             var config = new Dictionary<string, string>();
             _configuration.Bind("saprfc", config);
+            if(config.Count == 0)
+                throw new InvalidOperationException("Configuration for SAP connection is missing. Add configuration with key 'saprfc'");
 
             return config;
         }

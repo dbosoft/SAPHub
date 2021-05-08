@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Rebus.Retry.Simple;
 using Rebus.Serialization.Json;
 using Rebus.ServiceProvider;
+using SAPHub.Bus;
 using SAPHub.Connector.CommandHandlers;
 
 namespace SAPHub.Connector
@@ -42,7 +43,7 @@ namespace SAPHub.Connector
             services.AddRebusHandler<GetCompanyCommandHandler>();
 
 
-            services.AddHostedHandler((s, _) =>
+            services.AddHostedHandler((s, c) =>
             {
                 s.UseRebus();
                 return Task.CompletedTask;

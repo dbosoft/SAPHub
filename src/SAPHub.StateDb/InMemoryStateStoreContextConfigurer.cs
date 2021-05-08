@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace SAPHub.StateDb
 {
-    public class InMemoryStateStoreContextConfigurer : IDbContextConfigurer<StateStoreContext> 
+    internal class InMemoryStateStoreContextConfigurer : IDbContextConfigurer<StateStoreContext>
     {
         private readonly InMemoryDatabaseRoot _dbRoot;
 
-        public InMemoryStateStoreContextConfigurer(InMemoryDatabaseRoot dbRoot)
+        public InMemoryStateStoreContextConfigurer(InMemoryDatabaseRoot dbRoot, IModelBuilder<StateStoreContext> modelBuilder)
         {
             _dbRoot = dbRoot;
         }

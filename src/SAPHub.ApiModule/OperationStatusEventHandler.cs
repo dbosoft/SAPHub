@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Rebus.Handlers;
+using SAPHub.Messages;
 using SAPHub.StateDb;
 using SAPHub.StateDb.Model;
 

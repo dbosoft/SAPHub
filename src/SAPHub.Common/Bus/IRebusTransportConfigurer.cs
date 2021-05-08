@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Rebus.Config;
+﻿using Rebus.Config;
 using Rebus.Transport;
 
-namespace SAPHub
+namespace SAPHub.Bus
 {
     public interface IRebusTransportConfigurer
     {

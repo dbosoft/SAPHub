@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Rebus.Bus;
 using Rebus.Handlers;
+using SAPHub.Messages;
 
 namespace SAPHub.Connector
 {

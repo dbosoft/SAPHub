@@ -5,17 +5,20 @@ namespace SAPHub.StateDb
 {
     public class StateStoreContext : DbContext
     {
-        public StateStoreContext(DbContextOptions<StateStoreContext> options)
+        private readonly IModelBuilder<StateStoreContext> _modelBuilder;
+
+        public StateStoreContext(DbContextOptions<StateStoreContext> options, IModelBuilder<StateStoreContext> modelBuilder)
             : base(options)
         {
+            _modelBuilder = modelBuilder;
         }
 
         public DbSet<OperationModel> Operations { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<OperationModel>();
-
+            _modelBuilder.ConfigureModel(modelBuilder);
         }
     }
 }

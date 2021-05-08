@@ -5,6 +5,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>SAPHub</RootNamespace>
     <UserSecretsId>43e65619-cd76-4b53-9b2c-f61f9015613c</UserSecretsId>
+
   </PropertyGroup>
 
   <ItemGroup>
@@ -30,12 +31,15 @@
     <PackageReference Include="Dbosoft.Hosuto" Version="0.2.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
   </ItemGroup>
 
 
   <ItemGroup>
     <ProjectReference Include="..\SAPHub.ApiModule\SAPHub.ApiModule.csproj" />
-    <ProjectReference Include="..\SAPHub.Connector\SAPHub.Connector.csproj" />
+    <ProjectReference Include="..\SAPHub.ConnectorModule\SAPHub.ConnectorModule.csproj" />
+    <ProjectReference Include="..\SAPHub.MessageBus\SAPHub.MessageBus.csproj" />
+    <ProjectReference Include="..\SAPHub.StateDb\SAPHub.StateDb.csproj" />
   </ItemGroup>
 
 </Project>

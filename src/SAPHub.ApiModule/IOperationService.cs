@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using SAPHub.ApiModule.ApiModel;
 using SAPHub.ApiModule.Controllers;
+using SAPHub.Messages;
 
 namespace SAPHub.ApiModule
 {

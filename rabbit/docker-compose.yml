@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  rabbit:
+    command:
+      - rabbitmq-server
+    container_name: rabbitmq_standalone
+    hostname: rabbit
+    image: rabbitmq:3-management
+    ports:
+      - 8080:15672/tcp
+      - 5672:5672/tcp
+

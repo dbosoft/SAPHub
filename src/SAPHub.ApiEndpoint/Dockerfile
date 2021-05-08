@@ -7,12 +7,13 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
-COPY ["samples/saphub/SAPHub.ApiEndpoint/SAPHub.ApiEndpoint.csproj", "samples/saphub/SAPHub.ApiEndpoint/"]
-COPY ["samples/saphub/SAPHub.ApiModule/SAPHub.ApiModule.csproj", "samples/saphub/SAPHub.ApiModule/"]
-COPY ["samples/saphub/SAPHub.Common/SAPHub.Common.csproj", "samples/saphub/SAPHub.Common/"]
-RUN dotnet restore "samples/saphub/SAPHub.ApiEndpoint/SAPHub.ApiEndpoint.csproj"
+COPY ["src/SAPHub.ApiEndpoint/SAPHub.ApiEndpoint.csproj", "src/SAPHub.ApiEndpoint/"]
+COPY ["src/SAPHub.ApiModule/SAPHub.ApiModule.csproj", "src/SAPHub.ApiModule/"]
+COPY ["src/SAPHub.Common/SAPHub.Common.csproj", "src/SAPHub.Common/"]
+COPY ["src/SAPHub.StateDb/SAPHub.StateDb.csproj", "src/SAPHub.StateDb/"]
+RUN dotnet restore "src/SAPHub.ApiEndpoint/SAPHub.ApiEndpoint.csproj"
 COPY . .
-WORKDIR "/src/samples/saphub/SAPHub.ApiEndpoint"
+WORKDIR "/src/src/SAPHub.ApiEndpoint"
 RUN dotnet build "SAPHub.ApiEndpoint.csproj" -c Release -o /app/build
 
 FROM build AS publish

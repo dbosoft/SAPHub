@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Ardalis.Specification;
 using Ardalis.Specification.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SAPHub.StateDb.Model;
 
 namespace SAPHub.StateDb
 {

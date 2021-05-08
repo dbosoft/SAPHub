@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Rebus.Bus;
 using SAPHub.ApiModule.ApiModel;
+using SAPHub.Messages;
 using SAPHub.StateDb;
 using SAPHub.StateDb.Model;
 

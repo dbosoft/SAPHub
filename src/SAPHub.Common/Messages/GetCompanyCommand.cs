@@ -1,4 +1,4 @@
-﻿namespace SAPHub
+﻿namespace SAPHub.Messages
 {
     public class GetCompanyCommand : OperationCommand
     {

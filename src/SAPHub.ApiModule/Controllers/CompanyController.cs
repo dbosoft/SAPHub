@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using SAPHub.ApiModule.ApiModel;
+using SAPHub.Messages;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SAPHub.ApiModule.Controllers

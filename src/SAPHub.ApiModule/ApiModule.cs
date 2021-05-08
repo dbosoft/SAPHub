@@ -1,4 +1,6 @@
 using System;
+using System.Threading.Tasks;
+using Dbosoft.Hosuto.HostedServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -9,11 +11,12 @@ using Dbosoft.Hosuto.Modules;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Rebus.Handlers.Reordering;
 using Rebus.Retry.Simple;
 using Rebus.Routing.TypeBased;
 using Rebus.Serialization.Json;
 using Rebus.ServiceProvider;
+using SAPHub.Bus;
+using SAPHub.Messages;
 using SAPHub.StateDb;
 
 namespace SAPHub.ApiModule
@@ -73,11 +76,18 @@ namespace SAPHub.ApiModule
             {
                 var optionsBuilder = new DbContextOptionsBuilder<StateStoreContext>();
                 sp.GetRequiredService<IDbContextConfigurer<StateStoreContext>>().Configure(optionsBuilder);
-                return new StateStoreContext(optionsBuilder.Options);
+                return new StateStoreContext(optionsBuilder.Options, sp.GetRequiredService<IModelBuilder<StateStoreContext>>());
             });
 
             services.AddScoped(typeof(IStateStoreRepository<>), typeof(StateStoreRepository<>));
-            
+            services.AddHostedHandler((p, _) =>
+            {
+                using var context = p.GetRequiredService<StateStoreContext>();
+                context.Database.EnsureCreated();
+                return Task.CompletedTask;
+            });
+
+
             services.AddScoped<IOperationService, OperationService>();
 
         }

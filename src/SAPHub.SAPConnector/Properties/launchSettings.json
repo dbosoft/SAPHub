@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "SAPHub.SAPConnector": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "environmentVariables": {
+        "LD_LIBRARY_PATH": "/app/bin/debug/net5.0"
+      }
+    }
+  }
+}

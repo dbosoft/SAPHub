@@ -1,4 +1,4 @@
-﻿namespace SAPHub
+﻿namespace SAPHub.Bus
 {
     public class QueueNames
     {

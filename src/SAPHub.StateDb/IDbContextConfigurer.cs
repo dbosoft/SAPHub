@@ -2,7 +2,7 @@
 
 namespace SAPHub.StateDb
 {
-    public interface IDbContextConfigurer<TContext> where TContext : DbContext
+    public interface IDbContextConfigurer<TContext>
     {
         void Configure(DbContextOptionsBuilder options);
     }

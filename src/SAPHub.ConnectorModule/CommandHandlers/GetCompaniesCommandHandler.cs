@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Dbosoft.YaNco;
 using JetBrains.Annotations;
 using Rebus.Bus;
+using SAPHub.Messages;
 
 namespace SAPHub.Connector.CommandHandlers
 {
