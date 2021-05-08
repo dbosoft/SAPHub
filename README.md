@@ -20,7 +20,7 @@ Beside of cloning this repo please consider following requirements:
   Copy them to repos nwrfcsdk directory.
 
 * **Azure account**  
-  To run only locally no azure account is required. However to scale out or to use the Azure Service Bus you require a azure account (free acounts available for dev purposes),
+  To run only locally no azure account is required. However to scale out or to use the Azure Service Bus you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes),
 
 # Usage
 
@@ -36,7 +36,7 @@ The SAPHub comes with 3 pre-build applications:
 This is the "all-in-one" server, that both runs the API Module and SAP Connector Module. It requires no additional message exchange system and runs as a console app (only Windows).   
 
 **Quickstart:**  
-To run this application from Visual Studio first configure the SAP connection settings in your user secrets (see below) on project **SAPHub.Server**.  
+To run this application from Visual Studio first configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.Server**.  
 Then start **SAPHub.Server** project and navigate to http://localhost:62089/api to access the Api.Endpoint.
 
 ### SAPHub.ApiEndpoint
@@ -45,24 +45,24 @@ The API Endpoint runs only the API Module in a aspnetcore 5.0 environment. You c
 To communicate with the SAP Connector Module it requires a message exchange system to be set up. To scale horizontally you have to set up a Cosmos DB (see below).
 
 **Quickstart:**  
-You can start this app together with SAPHub.Connector and RabbitMq as message exchange using docker compose. See Quickstart for SAPHub.SAPConnector. 
-For other setups please check configuration section below. 
+You can start this app together with SAPHub.Connector and RabbitMq as message exchange using docker compose. See [Quickstart for SAPHub.SAPConnector](#saphubsapconnector). 
+For other setups please check [configuration](#configuration) section below. 
 
 ### SAPHub.SAPConnector
   
 The SAPConnector Service runs only the SAPConnector Module. 
 You can run only in a network that has direct access to the SAP system.
-To communicate with the API Module it requires a message exchange to be set up (see below).
+To communicate with the API Module it requires a message exchange to be set up ([see below](#message-exchanges)).
 
 **Quickstart:**  
 You can start this app together with SAPHub.ApiEndpoint and RabbitMq as message exchange using docker compose.  
-1. Configure the SAP connection settings in your user secrets (see below) on project **SAPHub.SAPConnector**.  
+1. Configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.SAPConnector**.  
 2. Open a command prompt in project directory.
 3. Run command `docker-compose up`.  
 
 This will automatically start docker containers running rabbitmq, SAPHub.ApiEndpoint and SAPHub.SAPConnector.
 
-For other setups please check configuration section below. 
+For other setups please check [configuration](#configuration) section below.  
 
 
 ## Modules
@@ -74,9 +74,10 @@ The sample provides a REST API to read company records from the SAP backend asyn
 ![swagger screenshot](https://raw.githubusercontent.com/dbosoft/SAPHub/main/.github/swagger.png)
 
 **Requests / Responses**  
-A request of /Company will not directly return the company data, but responds with a Operation record. The record contains the operation id. 
-This operation id can be used to query the status of operation. 
+A request of `/company` will not directly return the company data, but responds with a `Operation` record. The record contains the operation id. 
+This operation id can be used to query the status of operation on `/operation/<operationId>`. 
 
+*Query response:*
 ``` json
 {
 "id": "49d017f5-4a1b-4d32-aee2-5986daa7f211",
@@ -199,3 +200,12 @@ Please note that you can also use the CosmosDB emulator to run this locally.
   { "cosmosdb" : { "databaseName" : "<your_db_name>", "connectionstring": "" } }
   ``` 
 
+# Contribute
+Even if this is only a sample implementation we will continue to maintain it as reference architecture. You are welcome to contribute enhancements or to report issues. 
+
+
+#License
+The code of this sample is licensed under the MIT License - see the LICENSE file for details. Feel free to use it in any application.
+
+#Trademark notice
+SAP, Netweaver are trademarks of SAP SE
