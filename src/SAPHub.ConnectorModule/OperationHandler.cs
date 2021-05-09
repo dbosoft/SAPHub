@@ -22,43 +22,29 @@ namespace SAPHub.Connector
         {
             await _bus.Publish(new OperationStatusEvent { Id = Guid.NewGuid(), OperationId = message.Id, Status = OperationStatus.Running});
 
-            try
+            var result = await HandleOperation(message);
+            var statusEvent = new OperationStatusEvent
             {
-                var result = await HandleOperation(message);
-                var statusEvent = new OperationStatusEvent
-                {
-                    Id = Guid.NewGuid(),
-                    OperationId = message.Id,
-                    Status = OperationStatus.Completed
-                };
+                Id = Guid.NewGuid(),
+                OperationId = message.Id,
+                Status = OperationStatus.Completed
+            };
 
-                if (result != null)
+            if (result != null)
+            {
+                var resultArray = result.ToArray();
+                var firstEntry = resultArray.FirstOrDefault();
+                if (firstEntry != null)
                 {
-                    var resultArray = result.ToArray();
-                    var firstEntry = resultArray.FirstOrDefault();
-                    if (firstEntry != null)
-                    {
-                        statusEvent.ResultData = JsonConvert.SerializeObject(resultArray, Formatting.None);
-                        statusEvent.ResultType = firstEntry.GetType().AssemblyQualifiedName;
-
-                    }
+                    statusEvent.ResultData = JsonConvert.SerializeObject(resultArray, Formatting.None);
+                    statusEvent.ResultType = firstEntry.GetType().AssemblyQualifiedName;
 
                 }
 
-                await _bus.Publish(statusEvent);
-
             }
-            catch (Exception ex)
-            {
-                await _bus.Publish(new OperationStatusEvent
-                {
-                    Id = Guid.NewGuid(),
-                    OperationId = message.Id, 
-                    Status = OperationStatus.Failed,
-                    StatusMessage = ex.Message
-                });
 
-            }
+            await _bus.Publish(statusEvent);
+
 
         }
 
