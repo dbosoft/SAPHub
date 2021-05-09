@@ -11,6 +11,10 @@ namespace SAPHub.StateDb
                 .Property(x => x.Timestamp)
                 .IsRowVersion();
 
+            modelBuilder.Entity<OperationModel>()
+                .Property(x => x.Status)
+                .IsConcurrencyToken();
+
             modelBuilder.Entity<OperationModel>();
 
         }

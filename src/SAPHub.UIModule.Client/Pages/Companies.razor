@@ -1,0 +1,104 @@
+﻿@page "/companies"
+@using SAPHub.UI.Shared
+@inject HttpClient Http
+
+<h1>Companies</h1>
+
+<p>This component demonstrates fetching data from the connected SAP system.</p>
+
+
+@if (_error != null)
+{
+    <p><em>Oh, no, something went really wrong. Maybe we have a technical problem here.</em></p>
+    <p><em>Error: @_error</em></p>
+}
+
+@if (_result == null)
+{
+    switch (_status)
+    {
+        case OperationStatus.Queued:
+            <p><em>Your request has been queued, please wait a moment...</em></p>
+            break;
+        case OperationStatus.Running:
+            <p><em>Your request is currently processed, please stand by!</em></p>
+            break;
+        case OperationStatus.Failed:
+            <p><em>Oh, no, something went wrong.</em></p>
+            break;
+        case OperationStatus.Completed:
+            break;
+        default:
+            throw new ArgumentOutOfRangeException();
+    }
+    
+}
+else
+{
+    if (_result.OperationStatus == OperationStatus.Completed)
+    {
+        <p><em>This is the list of all companies defined in the SAP system:</em></p>
+
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Code</th>
+                <th>Name</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var company in _result.Result)
+            {
+                <tr>
+                    <td>@company.Code</td>
+                    <td>@company.Name</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p><em>Oh, no, something went wrong.</em></p>
+        <p><em>Maybe that message helps: @_result.Message</em></p>
+       
+    }
+
+}
+
+@code {
+    private OperationResult<Company> _result;
+    private OperationStatus _status;
+    private string _error;
+    private int _waits;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var operation = await Http.GetFromJsonAsync<Operation>("/api/company");
+        _status = operation.Status;
+
+        try
+        {
+            while (operation.Status == OperationStatus.Queued || operation.Status == OperationStatus.Running)
+            {
+                _status = operation.Status;
+                await Task.Delay(1000);
+                _waits++;
+                StateHasChanged();
+                operation = await Http.GetFromJsonAsync<Operation>($"/api/operation/{operation.Id}");
+            }
+
+            _result = await Http.GetFromJsonAsync<OperationResult<Company>>($"/api/company/result/{operation.Id}");
+        }
+        catch (Exception ex)
+        {
+            _error = ex.ToString();
+
+        }
+
+    }
+
+
+
+}

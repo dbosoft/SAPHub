@@ -5,6 +5,8 @@ using Dbosoft.Hosuto.Modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Rebus.Handlers;
+using Rebus.Retry.FailFast;
 using Rebus.Retry.Simple;
 using Rebus.Serialization.Json;
 using Rebus.ServiceProvider;
@@ -27,10 +29,13 @@ namespace SAPHub.Connector
                 return configurer
                     .Transport(t =>
                         sp.GetRequiredService<IRebusTransportConfigurer>().Configure(t, QueueNames.SAPConnector))
-
+                    
                     .Options(x =>
                     {
-                        x.SimpleRetryStrategy();
+                        x.SimpleRetryStrategy(maxDeliveryAttempts:1,
+                            secondLevelRetriesEnabled: true);
+                        //x.FailFastOn<InvalidOperationException>(e => true);
+                        
                         x.SetNumberOfWorkers(2);
                     })
                     .Subscriptions(s => sp.GetRequiredService<IRebusSubscriptionConfigurer>().Configure(s))
@@ -39,8 +44,11 @@ namespace SAPHub.Connector
                     .Logging(x => x.ColoredConsole());
             });
 
+
             services.AddRebusHandler<GetCompaniesCommandHandler>();
             services.AddRebusHandler<GetCompanyCommandHandler>();
+
+            services.AddTransient(typeof(IHandleMessages<>), typeof(FailedMessageHandler<>));
 
 
             services.AddHostedHandler((s, c) =>
