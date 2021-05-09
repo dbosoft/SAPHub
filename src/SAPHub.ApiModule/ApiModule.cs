@@ -38,6 +38,12 @@ namespace SAPHub.ApiModule
         [UsedImplicitly]
         public void ConfigureServices(IServiceProvider sp, IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("unSecure", builder =>
+            {
+                builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            }));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -109,6 +115,8 @@ namespace SAPHub.ApiModule
         });
 
             app.ApplicationServices.UseRebus(bus => bus.Subscribe(typeof(OperationStatusEvent)));
+
+            app.UseCors("unSecure");
 
             app.UseRouting();
 
