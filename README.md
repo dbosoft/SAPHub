@@ -27,15 +27,16 @@ So the application can be either be fully distributed (and scaled) or run as a s
 
 ## Apps
 
-The SAPHub comes with 3 pre-build applications:
+The SAPHub comes with 4 pre-build applications:
 
 ### SAPHub.Server
   
-This is the "all-in-one" server, that both runs the API Module and SAP Connector Module. It requires no additional message exchange system and runs as a console app (only Windows).   
+This is the "all-in-one" server, that  runs the UI Module, API Module and SAP Connector Module in one process.  
+It requires no additional message exchange system and runs as a console app (only Windows).   
 
 **Quickstart:**  
 To run this application from Visual Studio first configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.Server**.  
-Then start **SAPHub.Server** project and navigate to http://localhost:62089/api to access the Api.Endpoint.
+Then start **SAPHub.Server** project- a browser should be opened automatically on http://localhost:62089 where you can see the UI.
 
 &nbsp;
 
@@ -68,8 +69,22 @@ For other setups please check [configuration](#configuration) section below.
 
 &nbsp;
 
+### SAPHub.UI
+TBD - The standalone UI application is work-in-progress. Please check again later.
 
 ## Modules
+
+## UI Module
+The UI module implements a Blazor based application that demonstrates how the API could be used to request data asynchronously from the SAP System.
+
+&nbsp;
+
+![UI screenshot](https://raw.githubusercontent.com/dbosoft/SAPHub/main/.github/saphub_ui.png)
+
+
+**Scaling**  
+The SAP Connector can be scaled freely. However you have to consider CORS and load balancing the endpoint address for users and the API endpoint addresses.
+
 
 ### API Module
 
