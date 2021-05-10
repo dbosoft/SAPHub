@@ -11,12 +11,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto" Version="0.2.2" />
+    <PackageReference Include="Dbosoft.Hosuto" Version="0.3.1-PullRequest0028.15" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.5" />
 
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SAPHub.Common\SAPHub.Common.csproj" />
     <ProjectReference Include="..\SAPHub.UIModule.Client\SAPHub.UIModule.Client.csproj" />
     <ProjectReference Include="..\SAPHub.UIModule.Shared\SAPHub.UIModule.Shared.csproj" />
   </ItemGroup>

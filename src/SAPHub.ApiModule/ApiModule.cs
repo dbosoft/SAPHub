@@ -23,26 +23,27 @@ namespace SAPHub.ApiModule
 {
     public class ApiModule : WebModule
     {
-        public override string Path => "api";
+        public override string Path => _endpointResolver.GetEndpoint("api").ToString();
         public override string Name  => nameof(ApiModule);
-
+        private readonly EndpointResolver _endpointResolver;
 
         public ApiModule(IConfiguration configuration)
         {
             Configuration = configuration;
+            _endpointResolver = new EndpointResolver(Configuration);
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         [UsedImplicitly]
-        public void ConfigureServices(IServiceProvider sp, IServiceCollection services)
+        public void ConfigureServices(IServiceProvider sp, IServiceCollection services, IConfiguration configuration)
         {
-            services.AddCors(o => o.AddPolicy("unSecure", builder =>
+            services.AddCors(o => o.AddPolicy("ui", builder =>
             {
-                builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader();
+                var uiEndpoint = _endpointResolver.GetEndpoint("ui").GetComponents(UriComponents.SchemeAndServer,
+                    UriFormat.SafeUnescaped);
+                builder.WithOrigins(uiEndpoint);
             }));
 
             services.AddControllers();
@@ -110,15 +111,17 @@ namespace SAPHub.ApiModule
             app.UseSwaggerUI(c =>
             {
                 c.DisplayOperationId();
-                c.SwaggerEndpoint($"/{Path}/swagger/v1/swagger.json", "SAPHub.ApiModule v1");
+                c.SwaggerEndpoint($"{Path}/swagger/v1/swagger.json", "SAPHub.ApiModule v1");
 
         });
 
             app.ApplicationServices.UseRebus(bus => bus.Subscribe(typeof(OperationStatusEvent)));
 
-            app.UseCors("unSecure");
 
             app.UseRouting();
+
+            app.UseCors("ui");
+
 
             app.UseAuthorization();
 
@@ -129,4 +132,5 @@ namespace SAPHub.ApiModule
         }
 
     }
+
 }

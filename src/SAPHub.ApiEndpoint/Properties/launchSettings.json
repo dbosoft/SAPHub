@@ -8,22 +8,16 @@
     }
   },
   "profiles": {
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
     "SAPHub.ApiEndpoint": {
       "commandName": "Project",
       "launchBrowser": true,
+      "launchUrl": "http://localhost:8000",
       "environmentVariables": {
-        "SAPHUB_BUS__TYPE": "rabbitmq",
-        "SAPHUB_BUS__CONNECTIONSTRING": "amqp://guest:guest@rabbit",
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "DOTNET_ENVIRONMENT": "Development",
+        "SAPHUB_ENDPOINTS__api": "http://localhost:8000",
+        "SAPHUB_BUS__type": "inmemory"
       },
-      "applicationUrl": "https://localhost:5001;http://localhost:5000"
+      "applicationUrl": ""
     },
     "Docker": {
       "commandName": "Docker",

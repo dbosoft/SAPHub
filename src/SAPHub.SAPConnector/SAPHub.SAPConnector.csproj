@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto.Hosting" Version="0.2.2" />
+    <PackageReference Include="Dbosoft.Hosuto.Hosting" Version="0.3.1-PullRequest0028.15" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
   </ItemGroup>

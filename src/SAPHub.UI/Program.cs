@@ -1,9 +1,8 @@
-﻿using System;
-using Dbosoft.Hosuto.Modules.Hosting;
+﻿using Dbosoft.Hosuto.Modules.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace SAPHub.UI
 {
@@ -19,12 +18,14 @@ namespace SAPHub.UI
         {
 
             return ModulesHost.CreateDefaultBuilder(args)
-                .UseAspNetCoreWithDefaults( (_, hb)=> hb.UseStaticWebAssets())
+
+                .UseAspNetCoreWithDefaults((m, hb) =>
+                    hb.UseUrls(m.Path))
                 .HostModule<UIModule>()
+                .AddHostAssets<UIModule>()
                 .ConfigureHostConfiguration(config => config
                     .AddEnvironmentVariables("SAPHUB_")
-                    .AddUserSecrets<Program>()
-                );
+                ).ConfigureLogging(c=>c.SetMinimumLevel(LogLevel.Trace));
         }
     }
 }

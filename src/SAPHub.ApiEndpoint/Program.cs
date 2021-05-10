@@ -13,9 +13,6 @@ namespace SAPHub
     {
         public static void Main(string[] args)
         {
-            //give started bus some time to start up
-            Thread.Sleep(5000);
-
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -27,12 +24,11 @@ namespace SAPHub
 
             return ModulesHost.CreateDefaultBuilder(args)
                 .UseServiceCollection(services)
-                .UseAspNetCoreWithDefaults()
+                .UseAspNetCoreWithDefaults((m, hb) => hb.UseUrls(m.Path))
                 .HostModule<ApiModule.ApiModule>()
-                .ConfigureHostConfiguration(config => config
-                    .AddEnvironmentVariables("SAPHUB_")
-                    .AddUserSecrets<Program>()
-                );
+                .ConfigureAppConfiguration(config => config
+                    .AddEnvironmentVariables("SAPHUB_"));
+
         }
     }
 }

@@ -47,7 +47,7 @@ namespace SAPHub.Connector
                 });
                 await scope.CompleteAsync().ConfigureAwait(false);
             }
-            await _bus.Advanced.TransportMessage.Defer(TimeSpan.FromSeconds(30));
+            await _bus.Advanced.TransportMessage.Defer(TimeSpan.FromSeconds(10));
         }
     }
 }

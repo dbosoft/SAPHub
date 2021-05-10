@@ -36,7 +36,8 @@ It requires no additional message exchange system and runs as a console app (onl
 
 **Quickstart:**  
 To run this application from Visual Studio first configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.Server**.  
-Then start **SAPHub.Server** project- a browser should be opened automatically on http://localhost:62089 where you can see the UI.
+Then start **SAPHub.Server** project - a browser should be opened automatically on http://localhost:5000 where you can see the UI.  
+For swagger UI open http://localhost:5000/api/swagger.
 
 &nbsp;
 
@@ -58,7 +59,7 @@ It can run separated from all other components and needs only network access to 
 To communicate with the API Module it requires a message exchange to be set up ([see below](#message-exchanges)).
 
 **Quickstart:**  
-You can start this app together with SAPHub.ApiEndpoint and RabbitMq as message exchange using docker compose.  
+You can start this app together with SAPHub.UI, SAPHub.ApiEndpoint and RabbitMq as message exchange using docker compose.  
 1. Configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.SAPConnector**.  
 2. Open a command prompt in project directory.
 3. Run command `docker-compose up`.  
@@ -70,7 +71,9 @@ For other setups please check [configuration](#configuration) section below.
 &nbsp;
 
 ### SAPHub.UI
-TBD - The standalone UI application is work-in-progress. Please check again later.
+The standalone UI application is work-in-progress. It can be started, but will not work in docker currently. Please check later again. 
+
+&nbsp;
 
 ## Modules
 
@@ -150,14 +153,43 @@ The following settings are required/supported in the apps:
   - SAP Connection (required)
   - Message Exchange (optional)
   - CosmosDb (optional)
+  - URL endpoints (optional)
 
 * SAPHub.ApiEndpoint:
   - Message Exchange (required)
   - CosmosDb (optional, required to scale)
+  - URL endpoints (required)
+
+* SAPHub.UI:
+  - URL endpoints (required)  
 
 * SAPHub.SAPConnector:
   - Message Exchange (required)
   - SAP Connection (required)
+
+### URL Endpoint configuration
+
+To configure where the UI module can find the API and to enable CORS from the UI module you have to configure these URLs in both modules. 
+
+- endpoints::default  
+  This is the default (base) url that will be used if a relative path is defined, or path is not definied. 
+
+- endpoints::api  
+  URL of API endpoint  
+
+- endpoints::ui  
+  URL of UI
+
+This is the default configuration of SAPHub.Server:
+
+``` json
+{
+  "endpoints": {
+    "default": "http://localhost:5000",
+    "api": "http://localhost:5000/api"
+  }
+}
+```
 
 
 ### SAP Connection

@@ -4,10 +4,9 @@ version: '3.4'
 services:
   saphub.apiendpoint:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
+      - DOTNET_ENVIRONMENT=Development
     ports:
-      - "80"
+      - 5001:80
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -15,3 +14,12 @@ services:
   saphub.sapconnector:
       volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+
+  saphub.ui:
+    environment:
+      - DOTNET_ENVIRONMENT=Development
+    ports:
+      - 5000:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

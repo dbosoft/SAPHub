@@ -17,16 +17,33 @@ services:
       - internal
   saphub.apiendpoint:
     image: ${DOCKER_REGISTRY-}saphubapiendpoint
+    hostname: saphubapi
     build:
       context: .
       dockerfile: src/SAPHub.ApiEndpoint/Dockerfile
     environment:
       - SAPHUB_BUS__TYPE=rabbitmq
       - SAPHUB_BUS__CONNECTIONSTRING=amqp://guest:guest@rabbit
+      - SAPHUB_ENDPOINTS__default=http://localhost
+      - SAPHUB_ENDPOINTS__api=http://saphubapi
+      - SAPHUB_ENDPOINTS__ui=http://localhost:5000
     depends_on:
       - rabbit
     networks:
       - internal
+
+  saphub.ui:
+    image: ${DOCKER_REGISTRY-}saphubui
+    hostname: saphubui
+    build:
+      context: .
+      dockerfile: src/SAPHub.UI/Dockerfile
+    networks:
+      - internal
+    environment:
+      - SAPHUB_ENDPOINTS__default=http://localhost
+      - SAPHUB_ENDPOINTS__api=http://localhost:5001
+      - SAPHUB_ENDPOINTS__ui=http://saphubui
 
   saphub.sapconnector:
     image: ${DOCKER_REGISTRY-}saphubsapconnector
@@ -40,3 +57,5 @@ services:
     depends_on:
       - rabbit
     network_mode: host
+
+
