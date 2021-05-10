@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Rebus.Handlers;
+using Rebus.Persistence.InMem;
 using Rebus.Retry.FailFast;
 using Rebus.Retry.Simple;
 using Rebus.Serialization.Json;
@@ -41,6 +42,7 @@ namespace SAPHub.Connector
                     .Subscriptions(s => sp.GetRequiredService<IRebusSubscriptionConfigurer>().Configure(s))
                     .Serialization(x => x.UseNewtonsoftJson(new JsonSerializerSettings
                         {TypeNameHandling = TypeNameHandling.None}))
+                    .Timeouts(cfg => cfg.StoreInMemory())
                     .Logging(x => x.ColoredConsole());
             });
 

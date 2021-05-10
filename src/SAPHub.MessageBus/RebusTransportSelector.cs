@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Threading;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
 using Rebus.Config;
 using Rebus.Transport;
 using Rebus.Transport.InMem;
@@ -13,9 +16,13 @@ namespace SAPHub.MessageBus
         private readonly string _busType;
         private readonly string _connectionString;
 
-        public RebusTransportSelector(IConfiguration configuration, InMemNetwork network)
+        private ILogger _logger;
+
+
+        public RebusTransportSelector(IConfiguration configuration, InMemNetwork network, ILogger<RebusTransportSelector> logger)
         {
             _network = network;
+            _logger = logger;
 
             _busType = configuration["bus:type"];
             _connectionString = configuration["bus:connectionstring"]; 
@@ -49,6 +56,8 @@ namespace SAPHub.MessageBus
                         
                     break;
                 case "rabbitmq":
+                    WaitForRabbitMq(_connectionString);
+
                     configurer.UseRabbitMqAsOneWayClient(_connectionString)
                         .InputQueueOptions(o => o.SetAutoDelete(autoDelete: true));
                     break;
@@ -67,12 +76,47 @@ namespace SAPHub.MessageBus
                     configurer.UseAzureServiceBus(_connectionString,queueName);
                     break;
                 case "rabbitmq":
+
+                    WaitForRabbitMq(_connectionString);
                     configurer.UseRabbitMq(_connectionString,queueName);
                     break;
 
                 case "inmemory":
                     configurer.UseInMemoryTransport(_network,queueName);
                     break;
+            }
+        }
+
+        private void WaitForRabbitMq(string connectionString)
+        {
+            const int maxRetry = 5;
+            var retries = maxRetry;
+            var retryNo = 0;
+            var factory = new ConnectionFactory(){Uri= new Uri(connectionString)};
+
+            while (true)
+            {
+                try
+                {
+                    using (var _ = factory.CreateConnection())
+                    {
+                        break;
+                    }
+                }
+                catch
+                {
+                    if (retries == 1)
+                    {
+                        _logger.LogError("Failed to connect to RabbitMq. Giving up...");
+                        throw;
+                    }
+
+                    retries--;
+                    retryNo++;
+                    _logger.LogInformation($"Failed to connect to RabbitMq.Trying again in {retryNo*5} seconds... ({retryNo}/{maxRetry})");
+                    Thread.Sleep(5000* retryNo);
+
+                }
             }
         }
 

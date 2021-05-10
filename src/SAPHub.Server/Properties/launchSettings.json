@@ -3,11 +3,11 @@
     "SAPHub.Server": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:62089/",
+      "launchUrl": "http://localhost:5000/",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "DOTNET_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:62089/"
+      "applicationUrl": "http://localhost:5000"
     },
     "Docker": {
       "commandName": "Docker"

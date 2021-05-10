@@ -9,24 +9,30 @@ namespace SAPHub.UI
 {
     public class UIModule: WebModule
     {
-        public override string Path => "";
+        public override string Path => _endpointResolver.GetEndpoint("ui").ToString();
         public override string Name => "SAPHub.UIModule";
 
+        private readonly EndpointResolver _endpointResolver;
 
         public UIModule(IConfiguration configuration)
         {
             Configuration = configuration;
+            var contentRoot = configuration["contentRoot"];
+            _endpointResolver = new EndpointResolver(Configuration);
         }
 
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
+            var contentRoot = configuration["contentRoot"];
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddSingleton(_endpointResolver);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +50,7 @@ namespace SAPHub.UI
 
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+
 
             app.UseRouting();
 

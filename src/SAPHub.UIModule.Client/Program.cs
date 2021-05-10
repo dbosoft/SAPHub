@@ -14,7 +14,10 @@ namespace SAPHub.UI.Client
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            //builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("http://localhost:62089/") });
+
+            builder.Services.AddScoped<ClientConfigurationProvider>();
+            builder.Services.AddScoped<ApiClient>();
+
             await builder.Build().RunAsync();
         }
     }

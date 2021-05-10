@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto.Hosting.AspNetCore" Version="0.2.2" />
+    <PackageReference Include="Dbosoft.Hosuto.Hosting.AspNetCore" Version="0.3.1-PullRequest0028.15" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
@@ -24,10 +24,5 @@
     <ProjectReference Include="..\SAPHub.StateDb\SAPHub.StateDb.csproj" />
     <ProjectReference Include="..\SAPHub.UIModule\SAPHub.UIModule.csproj" />
   </ItemGroup>
-
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="copy &quot;$(SolutionDir)src\SAPHub.UIModule\$(OutDir)*.StaticWebAssets.xml&quot;  &quot;$(TargetDir)&quot;" />
-  </Target>
-
+  
 </Project>

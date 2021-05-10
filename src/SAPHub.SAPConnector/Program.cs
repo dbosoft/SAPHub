@@ -14,10 +14,6 @@ namespace SAPHub.SAPConnector
         public static void Main(string[] args)
         {
             RfcLibraryHelper.EnsurePathVariable();
-
-            //give started bus some time to start up
-            Thread.Sleep(5000);
-
             CreateHostBuilder(args).Build().Run();
         }
 

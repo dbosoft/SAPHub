@@ -1,6 +1,6 @@
 ﻿@page "/companies"
 @using SAPHub.UI.Shared
-@inject HttpClient Http
+@inject ApiClient Http
 
 <h1>Companies</h1>
 
@@ -75,7 +75,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var operation = await Http.GetFromJsonAsync<Operation>("/api/company");
+        var operation = await Http.GetCompanies();
         _status = operation.Status;
 
         try
@@ -86,10 +86,10 @@ else
                 await Task.Delay(1000);
                 _waits++;
                 StateHasChanged();
-                operation = await Http.GetFromJsonAsync<Operation>($"/api/operation/{operation.Id}");
+                operation = await Http.GetOperation(operation.Id);
             }
 
-            _result = await Http.GetFromJsonAsync<OperationResult<Company>>($"/api/company/result/{operation.Id}");
+            _result = await Http.GetCompaniesResult(operation.Id);
         }
         catch (Exception ex)
         {
