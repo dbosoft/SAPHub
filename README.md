@@ -87,8 +87,8 @@ The UI module implements a Blazor based application that demonstrates how the AP
 
 
 **Scaling**  
-The SAP Connector can be scaled freely. However you have to consider CORS and load balancing the endpoint address for users and the API endpoint addresses.
-
+The UI module can be scaled freely. However you have to consider CORS and load balancing the endpoint address for users and the API endpoint addresses.
+Therefore, if you scale out the UI, place it behind a load balancer and configure endpoint addresses to the load balancer.
 
 ### API Module
 
@@ -117,7 +117,8 @@ Once it is finished the data can be requested with `/Company/result/<operationId
 
 **Scaling**  
 To scale the API Module horizontally you have to enable the cosmos db storage.  
-Reason: when a SAP Connector sends a status event update only one API Endpoint will process the changes and update it's state store. Therefore all API Module instances have to use the same state store. 
+Reason: when a SAP Connector sends a status event update only one API Endpoint will process the changes and update it's state store. Therefore all API Module instances have to use the same state store.  
+Also you have to place it behind a load balancer and configure endpoint addresses to the load balancer.
 
 &nbsp;
 
