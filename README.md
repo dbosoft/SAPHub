@@ -92,12 +92,12 @@ Therefore, if you scale out the UI, place it behind a load balancer and configur
 
 ### API Module
 
-The sample provides a REST API to read company records from the SAP backend asynchronously. 
+The sample provides a REST API to read company code records from the SAP backend asynchronously. 
 
 ![swagger screenshot](https://raw.githubusercontent.com/dbosoft/SAPHub/main/.github/swagger.png)
 
 **Requests / Responses**  
-A request of `/company` will not directly return the company data, but responds with a `Operation` record. The record contains the operation id. 
+A request of `/companycode` will not directly return the company code data, but responds with a `Operation` record. The record contains the operation id. 
 This operation id can be used to query the status of operation on `/operation/<operationId>`. 
 
 *Query response:*
@@ -108,7 +108,7 @@ This operation id can be used to query the status of operation on `/operation/<o
 }
 ```
 
-Once it is finished the data can be requested with `/Company/result/<operationId>`
+Once it is finished the data can be requested with `/companycode/result/<operationId>`
 
 **Message Flow**  
 1. For each request the API module first creates a record for the operation in it's state store. 
