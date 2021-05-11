@@ -23,7 +23,8 @@ Beside of cloning this repo please consider following requirements:
 # Usage
 
 This sample uses [Hosuto](https://github.com/dbosoft/Hosuto) for building microservices that can be either combined in one process or run standalone. 
-So the application can be either be fully distributed (and scaled) or run as a single process. Hosuto calls the microservice implementation **Module**, and the microservice runtime process **App**:
+So the application can be either be fully distributed (and scaled) or run as a single process.  
+Hosuto calls the implementation part **Module**, and the host of modules **ModulesHost**. We will here use **App** as name for the application that runs the ModulesHost:
 
 ## Apps
 
