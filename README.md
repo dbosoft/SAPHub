@@ -28,7 +28,8 @@ Hosuto calls the implementation part **Module**, and the host of modules **Modul
 
 ## Apps
 
-The SAPHub comes with 4 pre-build applications:
+The SAPHub comes with 4 pre-build applications.  
+They can be used to read a SAP systems company codes (if this is not exciting enough for you just imagine that you could also place a sales order instead). 
 
 ### SAPHub.Server
   
