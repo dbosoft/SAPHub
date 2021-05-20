@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using ILogger = Dbosoft.YaNco.ILogger;
 
-namespace SAPHub.Connector
+namespace SAPHub.ConnectorModule
 {
+    /// <summary>
+    /// Adapter for YaNco Logging to Microsoft.Extensions.Logging
+    /// </summary>
     public class RfcLoggingAdapter : ILogger
     {
         private readonly Microsoft.Extensions.Logging.ILogger _logger;
 
-        public RfcLoggingAdapter(ILoggerFactory loggerFactory, IConfiguration configuration)
-        {            
-            _logger = loggerFactory.CreateLogger("saprfc");
-
+        // ReSharper disable once SuggestBaseTypeForParameter
+        public RfcLoggingAdapter(ILogger<RfcLoggingAdapter> logger)
+        {
+            _logger = logger;
         }
 
         public void LogException(Exception exception, string message)

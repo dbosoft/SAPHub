@@ -3,11 +3,13 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>2deab3ea-90f6-4c77-9d6a-5b4dad3b7497</UserSecretsId>
-
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+    <StaticWebAssetBasePath>.modules/$(AssemblyName)</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto" Version="0.3.1-PullRequest0028.15" />
+    <PackageReference Include="Dbosoft.Hosuto" Version="0.4.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />
     <PackageReference Include="Rebus.ServiceProvider" Version="6.4.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
@@ -17,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SAPHub.Common\SAPHub.Common.csproj" />
     <ProjectReference Include="..\SAPHub.StateDb\SAPHub.StateDb.csproj" />
+    <ProjectReference Include="..\SAPHub.WebContent\SAPHub.WebContent.csproj" />
   </ItemGroup>
 
 </Project>

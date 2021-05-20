@@ -6,6 +6,7 @@
     "Docker": {
       "commandName": "Docker",
       "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development",
         "LD_LIBRARY_PATH": "/app/bin/debug/net5.0"
       }
     }

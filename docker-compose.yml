@@ -27,6 +27,8 @@ services:
       - SAPHUB_ENDPOINTS__default=http://localhost
       - SAPHUB_ENDPOINTS__api=http://saphubapi
       - SAPHUB_ENDPOINTS__ui=http://localhost:5000
+    ports:
+      - 5001:80
     depends_on:
       - rabbit
     networks:
@@ -44,6 +46,8 @@ services:
       - SAPHUB_ENDPOINTS__default=http://localhost
       - SAPHUB_ENDPOINTS__api=http://localhost:5001
       - SAPHUB_ENDPOINTS__ui=http://saphubui
+    # ports:
+     # - 5000:80  currently UI module is not working in container, start standalone after container
 
   saphub.sapconnector:
     image: ${DOCKER_REGISTRY-}saphubsapconnector

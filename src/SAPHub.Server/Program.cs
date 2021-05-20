@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SAPHub.Connector;
+using SAPHub.ConnectorModule;
 using SAPHub.MessageBus;
 using SAPHub.StateDb;
 
@@ -16,6 +16,8 @@ namespace SAPHub
     {
         public static Task Main(string[] args)
         {
+            //this makes sure that UCI libraries can be found by
+            //sapnwrfc. It is only required for some platforms.
             RfcLibraryHelper.EnsurePathVariable();
 
            return CreateHostBuilder(args).RunConsoleAsync();
@@ -23,35 +25,32 @@ namespace SAPHub
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
+            //setup shared ServiceProvider
             var services = new ServiceCollection()
-                .AddTransportSelector()
-                .AddStateDb();
+                .AddTransportSelector()  // chooses Rebus transport by configuration
+                .AddStateDb();           // required for state store in API module
 
+            // set default Rebus transport to inmemory
             var staticSettings = new Dictionary<string,string>
             {
                 ["bus:type"] ="inmemory"
             };
 
+            // create ModulesHosts and host SAPConnector module
             return ModulesHost.CreateDefaultBuilder(args)
                 .UseServiceCollection(services)
                 .UseAspNetCoreWithDefaults((module, webHostBuilder) =>
                 {
-#pragma warning disable CA1416
+                    //we will use HttpSys instead of kestrel to use port sharing
                     webHostBuilder.UseHttpSys(options => { options.UrlPrefixes.Add(module.Path); })
                         .UseUrls(module.Path);
-#pragma warning restore CA1416
                 })
                 .HostModule<ApiModule.ApiModule>()
                 .HostModule<UI.UIModule>()
-                .AddHostAssets<UI.UIModule>()
                 .HostModule<SAPConnectorModule>()
                 .ConfigureAppConfiguration(config => config
                     .AddInMemoryCollection(staticSettings)
-                    .AddEnvironmentVariables("SAPHUB_")
-                ).ConfigureLogging(l=>
-                {
-                    l.SetMinimumLevel(LogLevel.Trace);
-                });
+                    .AddEnvironmentVariables("SAPHUB_"));
         }
     }
 }

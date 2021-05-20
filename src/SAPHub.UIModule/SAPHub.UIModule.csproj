@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <RootNamespace>SAPHub.UI</RootNamespace>
+    <StaticWebAssetBasePath>.modules/$(AssemblyName)</StaticWebAssetBasePath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto" Version="0.3.1-PullRequest0028.15" />
+    <PackageReference Include="Dbosoft.Hosuto" Version="0.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.5" />
 
   </ItemGroup>

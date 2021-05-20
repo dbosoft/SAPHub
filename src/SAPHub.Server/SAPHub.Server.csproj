@@ -2,14 +2,14 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net5.0-windows</TargetFramework>
     <RootNamespace>SAPHub</RootNamespace>
     <UserSecretsId>43e65619-cd76-4b53-9b2c-f61f9015613c</UserSecretsId>
 
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto.Hosting.AspNetCore" Version="0.3.1-PullRequest0028.15" />
+    <PackageReference Include="Dbosoft.Hosuto.Hosting.AspNetCore" Version="0.4.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="5.0.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.9" />

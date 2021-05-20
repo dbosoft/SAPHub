@@ -11,7 +11,7 @@ using Rebus.Retry.Simple;
 using Rebus.Transport;
 using SAPHub.Messages;
 
-namespace SAPHub.Connector
+namespace SAPHub.ConnectorModule
 {
     [UsedImplicitly]
     public class FailedMessageHandler<T> : IHandleMessages<T> where T: IFailed<OperationCommand>
@@ -26,7 +26,7 @@ namespace SAPHub.Connector
 
         public async Task Handle(T failed)
         {
-            var doNotDefer = failed.Exceptions.Any(x => x is InvalidOperationException);
+            var doNotDefer = failed.Exceptions.Any(x => x is RfcConfigMissingException);
 
             const int maxDeferCount = 3;
             var deferCount = Convert.ToInt32(failed.Headers.GetValueOrDefault(Headers.DeferCount));

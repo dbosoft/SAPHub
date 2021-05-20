@@ -2,7 +2,7 @@ using System;
 using Dbosoft.YaNco;
 using Dbosoft.YaNco.TypeMapping;
 using Microsoft.Extensions.DependencyInjection;
-using SAPHub.Connector;
+using SAPHub.ConnectorModule;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.Configuration
@@ -10,6 +10,7 @@ namespace Microsoft.Extensions.Configuration
     public static class YaNcoServiceCollectionExtensions
     {
 
+        // ReSharper disable once UnusedMethodReturnValue.Global
         public static IServiceCollection AddYaNco(this IServiceCollection services)
         {
             services.AddSingleton<ILogger, RfcLoggingAdapter>();

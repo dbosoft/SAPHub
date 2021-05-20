@@ -1,8 +1,8 @@
-﻿@page "/companies"
+﻿@page "/companycodes"
 @using SAPHub.UI.Shared
 @inject ApiClient Http
 
-<h1>Companies</h1>
+<h1>Company Codes</h1>
 
 <p>This component demonstrates fetching data from the connected SAP system.</p>
 
@@ -37,7 +37,7 @@ else
 {
     if (_result.OperationStatus == OperationStatus.Completed)
     {
-        <p><em>This is the list of all companies defined in the SAP system:</em></p>
+        <p><em>This is the list of all company codes defined in the SAP system:</em></p>
 
 
         <table class="table">
@@ -73,11 +73,16 @@ else
     private string _error;
     private int _waits;
 
+    /// <summary>
+    /// This method queries for company codes and then is polling for status updates.
+    /// A improved version could also use SignalR instead of polling.
+    /// </summary>
+    /// <returns></returns>
     protected override async Task OnInitializedAsync()
     {
-        var operation = await Http.GetCompanies();
+        var operation = await Http.GetCompanyCodes();
         _status = operation.Status;
-
+        
         try
         {
             while (operation.Status == OperationStatus.Queued || operation.Status == OperationStatus.Running)
@@ -89,7 +94,7 @@ else
                 operation = await Http.GetOperation(operation.Id);
             }
 
-            _result = await Http.GetCompaniesResult(operation.Id);
+            _result = await Http.GetCompanyCodesResult(operation.Id);
         }
         catch (Exception ex)
         {

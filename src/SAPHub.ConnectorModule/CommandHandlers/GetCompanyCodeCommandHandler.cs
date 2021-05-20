@@ -6,19 +6,19 @@ using JetBrains.Annotations;
 using Rebus.Bus;
 using SAPHub.Messages;
 
-namespace SAPHub.Connector.CommandHandlers
+namespace SAPHub.ConnectorModule.CommandHandlers
 {
     [UsedImplicitly]
-    public class GetCompanyCommandHandler : OperationHandler<GetCompanyCommand>
+    public class GetCompanyCodeCommandHandler : OperationHandler<GetCompanyCodeCommand>
     {
         private readonly IRfcContext _rfcContext;
 
-        public GetCompanyCommandHandler(IBus bus, IRfcContext rfcContext) : base(bus)
+        public GetCompanyCodeCommandHandler(IBus bus, IRfcContext rfcContext) : base(bus)
         {
             _rfcContext = rfcContext;
         }
 
-        public override async Task<IEnumerable<object>> HandleOperation(GetCompanyCommand message)
+        public override async Task<IEnumerable<object>> HandleOperation(GetCompanyCodeCommand message)
         {
             return new[]
             {
@@ -29,7 +29,7 @@ namespace SAPHub.Connector.CommandHandlers
                         .MapStructure("COMPANYCODE_DETAIL", s =>
                             from code in s.GetField<string>("COMP_CODE")
                             from name in s.GetField<string>("COMP_NAME")
-                            select new CompanyData()
+                            select new CompanyCodeData()
                             {
                                 Code = code,
                                 Name = name

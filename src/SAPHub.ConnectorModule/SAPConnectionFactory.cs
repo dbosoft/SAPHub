@@ -6,8 +6,11 @@ using LanguageExt;
 using Microsoft.Extensions.Configuration;
 using ConnectionBuilder = Dbosoft.YaNco.ConnectionBuilder;
 
-namespace SAPHub.Connector
+namespace SAPHub.ConnectorModule
 {
+    /// <summary>
+    /// This factory is used to automatically create RFC connection from configuration. 
+    /// </summary>
     public class SAPConnectionFactory
     {
         private readonly IConfiguration _configuration;
@@ -23,7 +26,7 @@ namespace SAPHub.Connector
             var config = new Dictionary<string, string>();
             _configuration.Bind("saprfc", config);
             if(config.Count == 0)
-                throw new InvalidOperationException("Configuration for SAP connection is missing. Add configuration with key 'saprfc'");
+                throw new RfcConfigMissingException("Configuration for SAP connection is missing. Add configuration with key 'saprfc'");
 
             return config;
         }

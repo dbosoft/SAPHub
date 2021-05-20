@@ -6,26 +6,26 @@ using JetBrains.Annotations;
 using Rebus.Bus;
 using SAPHub.Messages;
 
-namespace SAPHub.Connector.CommandHandlers
+namespace SAPHub.ConnectorModule.CommandHandlers
 {
     [UsedImplicitly]
-    public class GetCompaniesCommandHandler : OperationHandler<GetCompaniesCommand>
+    public class GetCompanyCodesCommandHandler : OperationHandler<GetCompanyCodesCommand>
     {
         private readonly IRfcContext _rfcContext;
 
-        public GetCompaniesCommandHandler(IBus bus, IRfcContext rfcContext) : base(bus)
+        public GetCompanyCodesCommandHandler(IBus bus, IRfcContext rfcContext) : base(bus)
         {
             _rfcContext = rfcContext;
         }
 
-        public override async Task<IEnumerable<object>> HandleOperation(GetCompaniesCommand message)
+        public override async Task<IEnumerable<object>> HandleOperation(GetCompanyCodesCommand message)
         {
             return await _rfcContext.CallFunction("BAPI_COMPANYCODE_GETLIST",
                 Output: f => f
                     .MapTable("COMPANYCODE_LIST", s =>
                         from code in s.GetField<string>("COMP_CODE")
                         from name in s.GetField<string>("COMP_NAME")
-                        select new CompanyData()
+                        select new CompanyCodeData()
                         {
                             Code = code,
                             Name = name

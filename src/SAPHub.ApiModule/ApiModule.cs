@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Reflection;
 using System.Threading.Tasks;
 using Dbosoft.Hosuto.HostedServices;
 using Microsoft.AspNetCore.Builder;
@@ -21,39 +23,51 @@ using SAPHub.StateDb;
 
 namespace SAPHub.ApiModule
 {
+    /// <summary>
+    /// This is the module the SAPHub REST API
+    /// </summary>
+    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class ApiModule : WebModule
     {
         public override string Path => _endpointResolver.GetEndpoint("api").ToString();
-        public override string Name  => nameof(ApiModule);
         private readonly EndpointResolver _endpointResolver;
 
         public ApiModule(IConfiguration configuration)
         {
-            Configuration = configuration;
-            _endpointResolver = new EndpointResolver(Configuration);
+            _endpointResolver = new EndpointResolver(configuration);
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        [UsedImplicitly]
-        public void ConfigureServices(IServiceProvider sp, IServiceCollection services, IConfiguration configuration)
+        public void ConfigureServices(IServiceProvider sp, IServiceCollection services)
         {
+            //configure CORS for UI, this will allow ui endpoints to use
+            //api from their origin
             services.AddCors(o => o.AddPolicy("ui", builder =>
             {
+                //remove path from endpoint address
                 var uiEndpoint = _endpointResolver.GetEndpoint("ui").GetComponents(UriComponents.SchemeAndServer,
                     UriFormat.SafeUnescaped);
                 builder.WithOrigins(uiEndpoint);
             }));
 
             services.AddControllers();
+
+            //setup swagger
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SAPHub.ApiModule", Version = "v1" });
                 c.EnableAnnotations();
 
+                // XML Documentation
+                var xmlFile = $"{typeof(ApiModule).Assembly.GetName().Name}.xml";
+                var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+
             });
 
+            //setup rebus as message sender and event recipient
+            //transport will be configured by IRebusTransportConfigurer, so app has control here
             services.AddRebus(configurer =>
             {
                  return configurer
@@ -62,8 +76,8 @@ namespace SAPHub.ApiModule
                     .Routing(x =>
                     {
                         x.TypeBased()
-                            .Map(typeof(GetCompaniesCommand), QueueNames.SAPConnector)
-                            .Map(typeof(GetCompanyCommand), QueueNames.SAPConnector);
+                            .Map(typeof(GetCompanyCodesCommand), QueueNames.SAPConnector)
+                            .Map(typeof(GetCompanyCodeCommand), QueueNames.SAPConnector);
                     })
                     .Options(x =>
                     {
@@ -79,14 +93,19 @@ namespace SAPHub.ApiModule
 
             services.AddRebusHandler<OperationStatusEventHandler>();
 
+            //setup state db (efcore)
             services.AddScoped((_) =>
             {
+                //the context has to be build by app, so it has control of actual implementation selection
                 var optionsBuilder = new DbContextOptionsBuilder<StateStoreContext>();
                 sp.GetRequiredService<IDbContextConfigurer<StateStoreContext>>().Configure(optionsBuilder);
                 return new StateStoreContext(optionsBuilder.Options, sp.GetRequiredService<IModelBuilder<StateStoreContext>>());
             });
 
+            //repository abstraction for StateStore
             services.AddScoped(typeof(IStateStoreRepository<>), typeof(StateStoreRepository<>));
+
+            //add a handler that will create database if not existing
             services.AddHostedHandler((p, _) =>
             {
                 using var context = p.GetRequiredService<StateStoreContext>();
@@ -107,28 +126,37 @@ namespace SAPHub.ApiModule
                 app.UseDeveloperExceptionPage();
             }
 
+            //swagger ceremony
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.DisplayOperationId();
-                c.SwaggerEndpoint($"{Path}/swagger/v1/swagger.json", "SAPHub.ApiModule v1");
+                c.SwaggerEndpoint($"{Path.TrimEnd('/')}/swagger/v1/swagger.json", "SAPHub.ApiModule v1");
 
         });
 
             app.ApplicationServices.UseRebus(bus => bus.Subscribe(typeof(OperationStatusEvent)));
 
-
+            app.UseDefaultFiles(new DefaultFilesOptions
+            {
+                DefaultFileNames = new
+                    List<string> { "index.html" }
+            });
+            app.UseStaticFiles();
             app.UseRouting();
 
+            //enable cors policy from above
             app.UseCors("ui");
 
-
+            //currently not used, but keep it possible
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+
         }
 
     }

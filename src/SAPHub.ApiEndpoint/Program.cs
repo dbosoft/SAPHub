@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using Dbosoft.Hosuto.Modules.Hosting;
+﻿using Dbosoft.Hosuto.Modules.Hosting;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,10 +17,12 @@ namespace SAPHub
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
+            //setup shared ServiceProvider
             var services = new ServiceCollection()
-                .AddTransportSelector()
-                .AddStateDb();
+                .AddTransportSelector()  // chooses Rebus transport by configuration
+                .AddStateDb();           // required for state store in API module 
 
+            // create ModulesHosts with ASPNetCore enabled and host API module
             return ModulesHost.CreateDefaultBuilder(args)
                 .UseServiceCollection(services)
                 .UseAspNetCoreWithDefaults((m, hb) => hb.UseUrls(m.Path))
