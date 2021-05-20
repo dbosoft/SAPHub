@@ -84,7 +84,7 @@ The UI module implements a Blazor based application that demonstrates how the AP
 
 &nbsp;
 
-![UI screenshot](https://raw.githubusercontent.com/dbosoft/SAPHub/main/.github/saphub_ui.png)
+![UI screenshot](https://raw.githubusercontent.com/dbosoft/SAPHub/main/.github/saphub_ui.gif)
 
 
 **Scaling**  
