@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dbosoft.Hosuto" Version="0.3.1-PullRequest0028.15" />
+    <PackageReference Include="Dbosoft.Hosuto" Version="0.4.0" />
     <PackageReference Include="Dbosoft.YaNco" Version="4.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
     <PackageReference Include="Rebus.ServiceProvider" Version="6.4.1" />

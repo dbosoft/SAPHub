@@ -11,10 +11,10 @@
     "SAPHub.ApiEndpoint": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:8000",
+      "launchUrl": "http://localhost:5001",
       "environmentVariables": {
         "DOTNET_ENVIRONMENT": "Development",
-        "SAPHUB_ENDPOINTS__api": "http://localhost:8000",
+        "SAPHUB_ENDPOINTS__api": "http://localhost:5001",
         "SAPHUB_BUS__type": "inmemory"
       },
       "applicationUrl": ""

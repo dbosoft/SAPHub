@@ -28,19 +28,19 @@ namespace SAPHub.UI.Client
 
         }
 
-        public async Task<Operation> GetCompanies()
+        public async Task<Operation> GetCompanyCodes()
         {
-            return await (await GetHttpClient()).GetFromJsonAsync<Operation>("company");
+            return await (await GetHttpClient()).GetFromJsonAsync<Operation>("companycodes");
         }
 
-        public async Task<OperationResult<Company>> GetCompaniesResult(Guid id)
+        public async Task<OperationResult<Company>> GetCompanyCodesResult(Guid id)
         {
-            return await (await GetHttpClient()).GetFromJsonAsync<OperationResult<Company>>($"company/result/{id}");
+            return await (await GetHttpClient()).GetFromJsonAsync<OperationResult<Company>>($"companycodes/result/{id}");
         }
 
         public async Task<Operation> GetOperation(Guid id)
         {
-            return await (await GetHttpClient()).GetFromJsonAsync<Operation>($"operation/{id}");
+            return await (await GetHttpClient()).GetFromJsonAsync<Operation>($"operations/{id}");
         }
     }
 }

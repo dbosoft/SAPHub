@@ -1,10 +1,8 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
-using Dbosoft.Hosuto.Modules.Hosting;
+﻿using Dbosoft.Hosuto.Modules.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SAPHub.Connector;
+using SAPHub.ConnectorModule;
 using SAPHub.MessageBus;
 
 namespace SAPHub.SAPConnector
@@ -13,23 +11,27 @@ namespace SAPHub.SAPConnector
     {
         public static void Main(string[] args)
         {
+            //this makes sure that UCI libraries can be found by
+            //sapnwrfc. It is only required for some platforms.
             RfcLibraryHelper.EnsurePathVariable();
+
             CreateHostBuilder(args).Build().Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
+            //setup shared ServiceProvider
             var services = new ServiceCollection()
-                .AddTransportSelector();
+                .AddTransportSelector();    // chooses Rebus transport by configuration
 
+            // create ModulesHosts and host SAPConnector module
             return ModulesHost.CreateDefaultBuilder(args)
                 .UseServiceCollection(services)
-                .HostModule<SAPConnectorModule>()
-                .ConfigureHostConfiguration(config => config
-                    .AddEnvironmentVariables("SAPHUB_")
-                    .AddUserSecrets<Program>()
-                );
-        }
+                        .HostModule<SAPConnectorModule>()
+                        .ConfigureHostConfiguration(config => config
+                            .AddEnvironmentVariables("SAPHUB_")
+                        );
+                }
 
     }
 }

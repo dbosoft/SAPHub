@@ -10,7 +10,6 @@ namespace SAPHub.UI
     public class UIModule: WebModule
     {
         public override string Path => _endpointResolver.GetEndpoint("ui").ToString();
-        public override string Name => "SAPHub.UIModule";
 
         private readonly EndpointResolver _endpointResolver;
 
@@ -38,6 +37,7 @@ namespace SAPHub.UI
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

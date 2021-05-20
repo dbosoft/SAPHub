@@ -11,7 +11,7 @@ using SAPHub.StateDb.Model;
 
 namespace SAPHub.ApiModule
 {
-    class OperationService : IOperationService
+    internal class OperationService : IOperationService
     {
         private readonly IStateStoreRepository<OperationModel> _repository;
         private readonly IBus _bus;
@@ -22,7 +22,7 @@ namespace SAPHub.ApiModule
             _bus = bus;
         }
 
-        public async Task<IEnumerable<ApiModel.Operation>> GetAll()
+        public async Task<IEnumerable<Operation>> GetAll()
         {
             return (await _repository.ListAsync()).Select(x => x.ToApiModel());
         }

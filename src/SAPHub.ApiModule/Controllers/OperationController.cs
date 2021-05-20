@@ -9,12 +9,12 @@ namespace SAPHub.ApiModule.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OperationController : ControllerBase
+    public class OperationsController : ControllerBase
     {
         private readonly IOperationService _operationService;
 
 
-        public OperationController(IOperationService operationService)
+        public OperationsController(IOperationService operationService)
         {
             _operationService = operationService;
         }

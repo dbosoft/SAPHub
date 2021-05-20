@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 namespace SAPHub.UI
 {
@@ -16,16 +15,13 @@ namespace SAPHub.UI
 
         public static IHostBuilder CreateHostBuilder(string[] args)
         {
-
+            
+            // create ModulesHosts and host SAPConnector module
             return ModulesHost.CreateDefaultBuilder(args)
-
-                .UseAspNetCoreWithDefaults((m, hb) =>
-                    hb.UseUrls(m.Path))
+                .UseAspNetCoreWithDefaults((m, hb) => hb.UseUrls(m.Path))
                 .HostModule<UIModule>()
-                .AddHostAssets<UIModule>()
                 .ConfigureHostConfiguration(config => config
-                    .AddEnvironmentVariables("SAPHUB_")
-                ).ConfigureLogging(c=>c.SetMinimumLevel(LogLevel.Trace));
+                    .AddEnvironmentVariables("SAPHUB_"));
         }
     }
 }

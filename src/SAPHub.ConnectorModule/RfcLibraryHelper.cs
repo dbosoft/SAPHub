@@ -1,14 +1,14 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SAPHub.Connector
+namespace SAPHub.ConnectorModule
 {
     public static class RfcLibraryHelper
     {
         /// <summary>
         /// This method ensures that either LD_LIBRARY_PATH or PATH points to base directory
         /// where referenced UCI libs should be stored.
-        /// Please note that this don't work for docker containers
+        /// Please note that this don't work for linux
         /// </summary>
         public static void EnsurePathVariable()
         {
