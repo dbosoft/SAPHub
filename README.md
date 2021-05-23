@@ -33,7 +33,8 @@ For getting started with SAPHub we recommend to run the automatic setup script a
 
 ``` shell
 git clone https://github.com/dbosoft/SAPHub.git
-PowerShell -Command .\SAPHub\setup.ps1
+cd SAPHub
+PowerShell -Command .\setup.ps1
 ```
 The script will guide you through the steps to download the SAP NW RFC SDK and to configure the connection to the SAP System. 
 
