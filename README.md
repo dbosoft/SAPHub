@@ -1,6 +1,16 @@
 # SAPHub
 This is a sample application to demonstrate how you can combine [Hosuto](https://github.com/dbosoft/Hosuto) and [YaNco](https://github.com/dbosoft/YaNco) to build a reliable and scaleable service with SAP backend integration.
 
+## Quickstart
+
+For getting started with SAPHub we recommend to run the automatic setup script after cloning this repository. 
+
+``` shell
+git clone https://github.com/dbosoft/SAPHub.git
+PowerShell -Command .\SAPHub\setup.ps1
+```
+The script will guide you through the steps to download the SAP NW RFC SDK and to configure the connection to the SAP System. 
+
 
 # Requirements
 
@@ -21,17 +31,6 @@ Beside of cloning this repo please consider following requirements:
 
 * **Azure account**  
   To run only locally no azure account is required. However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) or to use the [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
-
-# Quickstart
-
-For getting started with SAPHub we recommend to run the automatic setup script after cloning this repository. 
-
-``` shell
-git clone https://github.com/dbosoft/SAPHub.git
-PowerShell -Command .\SAPHub\setup.ps1
-```
-The script will guide you through the steps to download the SAP NW RFC SDK and to configure the connection to the SAP System. 
-
 
 # Usage
 This sample uses [Hosuto](https://github.com/dbosoft/Hosuto) for building microservices that can be either combined in one process or run standalone. 
