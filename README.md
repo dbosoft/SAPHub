@@ -50,9 +50,12 @@ This is the "all-in-one" server, that  runs the UI Module, API Module and SAP Co
 It requires no additional message exchange system and runs as a console app (only Windows).   
 
 **Quickstart:**  
+After running the setup script (see [Quickstart](#Quickstart) you can run script `Start-SAPHubServer` to build and run this app. 
+
 To run this application from Visual Studio first configure the SAP connection settings in your user secrets ([see below](#sap-connection)) on project **SAPHub.Server**.  
 Then start **SAPHub.Server** project - a browser should be opened automatically on http://localhost:5000 where you can see the UI.  
 For swagger UI open http://localhost:5000/api/swagger.
+
 
 &nbsp;
 
