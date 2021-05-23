@@ -38,6 +38,7 @@ PowerShell -Command .\setup.ps1
 ```
 The script will guide you through the steps to download the SAP NW RFC SDK and to configure the connection to the SAP System. 
 
+This video shows how to use the script: https://youtu.be/FG2KOWbJ42c
 
 ## Apps
 
