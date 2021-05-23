@@ -11,20 +11,33 @@ Beside of cloning this repo please consider following requirements:
   If you would like to try the docker or azure integration also the docker/azure tools have to be installed.
 
 * **SAP RFC SDK**  
-  Please note that to build and run this project you have to download the SAP Netweaver RFC SDK from the SAP Support Portal.   
-  Please see the requirements section for YaNco how to obtain the SDK: https://github.com/dbosoft/YaNco#platforms--prerequisites 
+  Please note that to build and run this project you have to download the SAP Netweaver RFC SDK from the SAP Support Portal.
+  We recommend to use the [Setup Script](#Quickstart) to download the SDK.
 
+  See the requirements section of YaNco how to obtain the SDK *manually*:  
+  https://github.com/dbosoft/YaNco#platforms--prerequisites   
   You have to download both the Windows_X64 and Linux_x64 Netweaver RFC SDK binaries.
   Copy them to repos nwrfcsdk directory.
 
 * **Azure account**  
   To run only locally no azure account is required. However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) or to use the [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
 
-# Usage
+# Quickstart
 
+For getting started with SAPHub we recommend to run the automatic setup script after cloning this repository. 
+
+``` shell
+git clone https://github.com/dbosoft/SAPHub.git
+PowerShell -Command .\SAPHub\setup.ps1
+```
+The script will guide you through the steps to download the SAP NW RFC SDK and to configure the connection to the SAP System. 
+
+
+# Usage
 This sample uses [Hosuto](https://github.com/dbosoft/Hosuto) for building microservices that can be either combined in one process or run standalone. 
 So the application can be either be fully distributed (and scaled) or run as a single process.  
-Hosuto calls the implementation part **Module**, and the host of modules **ModulesHost**. We will here use **App** as name for the application that runs the ModulesHost:
+Hosuto calls the implementation part **Module**, and the host of modules **ModulesHost**. We will here use **App** as name for the application that runs the ModulesHost.
+
 
 ## Apps
 

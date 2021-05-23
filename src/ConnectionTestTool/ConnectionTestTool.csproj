@@ -1,0 +1,59 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>9532ddbf-043d-4ddd-bd43-3d29edcc70cd</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.1.0" />
+       <PackageReference Include="Dbosoft.YaNco" Version="4.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\nwrfcsdk\x64\lib\icudt50.dll" Link="icudt50.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\x64\lib\icuin50.dll" Link="icuin50.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\x64\lib\icuuc50.dll" Link="icuuc50.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\x64\lib\libicudecnumber.dll" Link="libicudecnumber.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\x64\lib\libsapucum.dll" Link="libsapucum.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\x64\lib\sapnwrfc.dll" Link="sapnwrfc.dll">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\x64\lib\sapnwrfc.pdb" Link="sapnwrfc.pdb">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="..\..\nwrfcsdk\linux-x64\lib\libicudata.so.50" Link="libicudata.so.50">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\linux-x64\lib\libicudecnumber.so" Link="libicudecnumber.so">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\linux-x64\lib\libicui18n.so.50" Link="libicui18n.so.50">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\linux-x64\lib\libicuuc.so.50" Link="libicuuc.so.50">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\linux-x64\lib\libsapnwrfc.so" Link="libsapnwrfc.so">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Include="..\..\nwrfcsdk\linux-x64\lib\libsapucum.so" Link="libsapucum.so">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+</Project>
