@@ -35,7 +35,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPHub.UIModule", "src\SAPH
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPHub.UI", "src\SAPHub.UI\SAPHub.UI.csproj", "{D848759F-73F2-428C-B138-EE945E8E7687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SAPHub.WebContent", "src\SAPHub.WebContent\SAPHub.WebContent.csproj", "{2F821CC2-B247-4984-BBDE-0796D6F3FF6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SAPHub.WebContent", "src\SAPHub.WebContent\SAPHub.WebContent.csproj", "{2F821CC2-B247-4984-BBDE-0796D6F3FF6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConnectionTestTool", "src\ConnectionTestTool\ConnectionTestTool.csproj", "{B8864E77-2651-4971-B1C5-7CD4CED4D568}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -99,6 +101,10 @@ Global
 		{2F821CC2-B247-4984-BBDE-0796D6F3FF6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F821CC2-B247-4984-BBDE-0796D6F3FF6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F821CC2-B247-4984-BBDE-0796D6F3FF6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8864E77-2651-4971-B1C5-7CD4CED4D568}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8864E77-2651-4971-B1C5-7CD4CED4D568}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8864E77-2651-4971-B1C5-7CD4CED4D568}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8864E77-2651-4971-B1C5-7CD4CED4D568}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
