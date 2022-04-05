@@ -40,6 +40,8 @@ The script will guide you through the steps to download the SAP NW RFC SDK and t
 
 This video shows how to use the script: https://youtu.be/FG2KOWbJ42c
 
+**Update:** Due to changes SAP has made to the logon process it is no longer possible to download the SDK from SAP Launchpad with the setup script. Please download the nwrfcsdk manually as explained above. 
+
 ## Apps
 
 The SAPHub comes with 4 pre-build applications.  
