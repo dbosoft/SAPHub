@@ -17,46 +17,53 @@ if(!$PSCmdlet.ShouldContinue("Start setup of SAPHub?", "Ready? Than confirm next
     return
 }
 
-# loading sub scripts
-Push-Location
-Set-Location $PSScriptRoot
-. ./scripts/Get-SAPNWRfcSdk.ps1
-Pop-Location
-
-function CheckSupportCredentials{
-    param(
-        [pscredential] $Credentials
-    )
-
-    if($null -eq $Credentials){
-        return $false
-    }
-
-    if([string]::IsNullOrWhiteSpace($Credentials.GetNetworkCredential().UserName)){        
-        return $false
-    }
-
-    if([string]::IsNullOrWhiteSpace($Credentials.GetNetworkCredential().Password)){        
-        return $false
-    }
-
-    return $true
-}
-    
-
 function Step1{
 [CmdletBinding()]
 Param()
-    $supportCredentials = Get-Credential -Message "SAP Support Portal Account"
-    $checkResult = CheckSupportCredentials($supportCredentials)
-    if($checkResult -ne $true) {
-        Write-Host "Mmmhm, we need both username and password."
-        
-        return $false
+Write-Host "
+
+If you confirm the next question, we will open a browser window to the SAP Support Launchpad.
+
+In that window, navigate to: 
+
+  --> SAP NW RFC SDK
+      --> SAP NW RFC SDK 7.50
+
+Please download latest version for ""Windows on x64 64 BIT"" and ""Linux on X86_64 64 BIT"".
+
+When you are done, please close the browser window and press enter.
+"
+    $success = $PSCmdlet.ShouldContinue("Please confirm that you have read the download information.","Ready to proceed?")
+    if($success -eq $false){
+        return $false 
     }
 
-    Write-Host "Ok, now trying to download SAPNWRFC SDK. Please wait and watch for errors..."
-    $success = Get-SAPNWRfcSdk -Credential $supportCredentials -ErrorAction Continue
+    Write-Host "
+    
+We have opened a browser window to the SAP Support Launchpad. Please download the RFC SDK from that location."    
+    Start-Process "https://launchpad.support.sap.com/#/softwarecenter/template/products/_APP=00200682500000001943&_EVENT=DISPHIER&HEADER=N&FUNCTIONBAR=Y&EVENT=TREE&TMPL=INTRO_SWDC_SP_AD&V=MAINT&REFERER=CATALOG-PATCHES&ROUTENAME=products/By%20Category%20-%20Additional%20Components"
+    
+    $success = $PSCmdlet.ShouldContinue("Please confirm that you have downloaded the files.","Download complete?")
+    if($success -eq $false){
+        return $false 
+    }
+    Write-Host "
+    
+Great! Now please extract the files of the WINDOWS SDK zip file to directory '$PSScriptRoot\nwrfcsdk\x64'."    
+    $success = $PSCmdlet.ShouldContinue("Please confirm that you have copied the Windows SDK files.","Files copied?")
+
+    if($success -eq $false){
+        return $false 
+    }
+
+    Write-Host "
+    
+Alomost done! Finally: please extract the files of the Linux SDK zip file to directory '$PSScriptRoot\nwrfcsdk\linux-x64'."    
+    $success = $PSCmdlet.ShouldContinue("Please confirm that you have copied the Linux SDK files.","Files copied?")
+
+    if($success -eq $false){
+        return $false 
+    }    
 
     return $success
 
@@ -71,7 +78,7 @@ Step 1 - Download SAP NW RFC SDK
 ---------------------------------------------------------------------------
 
 First of all we need the SAP NW RFC SDK. You can only get this directly from SAP. 
-To download it now, enter the username and the password of the SAP Support Portal account in the following password prompt. 
+This script will guide you to the necessary steps to download the SDK.
 "
 while($true){
 
