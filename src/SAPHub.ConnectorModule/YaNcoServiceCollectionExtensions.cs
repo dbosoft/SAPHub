@@ -14,8 +14,8 @@ namespace Microsoft.Extensions.Configuration
         public static IServiceCollection AddYaNco(this IServiceCollection services)
         {
             services.AddSingleton<ILogger, RfcLoggingAdapter>();
-            services.AddSingleton<Func<ILogger, IFieldMapper, IRfcRuntime>>(
-                sp => (l, m) => new RfcRuntime(sp.GetService<ILogger>(), m));
+            services.AddSingleton<Func<ILogger, IFieldMapper, RfcRuntimeOptions, IRfcRuntime>>(
+                sp => (l, m, o) => new RfcRuntime(sp.GetService<ILogger>(), m, o));
             services.AddSingleton<SAPConnectionFactory>();
             services.AddSingleton(sp => sp.GetRequiredService<SAPConnectionFactory>().CreateConnectionFunc());
             services.AddTransient<IRfcContext, RfcContext>();
