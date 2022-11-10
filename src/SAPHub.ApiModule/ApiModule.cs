@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Threading.Tasks;
 using Dbosoft.Hosuto.HostedServices;
 using Microsoft.AspNetCore.Builder;
@@ -13,10 +12,10 @@ using Dbosoft.Hosuto.Modules;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Rebus.Config;
 using Rebus.Retry.Simple;
 using Rebus.Routing.TypeBased;
 using Rebus.Serialization.Json;
-using Rebus.ServiceProvider;
 using SAPHub.Bus;
 using SAPHub.Messages;
 using SAPHub.StateDb;
@@ -70,7 +69,7 @@ namespace SAPHub.ApiModule
             //transport will be configured by IRebusTransportConfigurer, so app has control here
             services.AddRebus(configurer =>
             {
-                 return configurer
+                return configurer
                     .Transport(t =>
                         sp.GetRequiredService<IRebusTransportConfigurer>().Configure(t, QueueNames.Api))
                     .Routing(x =>
@@ -89,7 +88,7 @@ namespace SAPHub.ApiModule
                         { TypeNameHandling = TypeNameHandling.None }))
                     .Logging(x => x.ColoredConsole());
 
-            });
+            }, onCreated: bus => bus.Subscribe(typeof(OperationStatusEvent)));
 
             services.AddRebusHandler<OperationStatusEventHandler>();
 
@@ -134,8 +133,6 @@ namespace SAPHub.ApiModule
                 c.SwaggerEndpoint($"{Path.TrimEnd('/')}/swagger/v1/swagger.json", "SAPHub.ApiModule v1");
 
         });
-
-            app.ApplicationServices.UseRebus(bus => bus.Subscribe(typeof(OperationStatusEvent)));
 
             app.UseDefaultFiles(new DefaultFilesOptions
             {

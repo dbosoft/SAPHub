@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
+using Rebus.Config;
 using Rebus.Handlers;
 using Rebus.Persistence.InMem;
 using Rebus.Retry.Simple;
@@ -13,6 +14,7 @@ using Rebus.Serialization.Json;
 using Rebus.ServiceProvider;
 using SAPHub.Bus;
 using SAPHub.ConnectorModule.CommandHandlers;
+using Exception = System.Exception;
 
 namespace SAPHub.ConnectorModule
 {
@@ -60,11 +62,7 @@ namespace SAPHub.ConnectorModule
                 services.AddTransient(typeof(IHandleMessages<>), typeof(FailedMessageHandler<>));
 
             //finally add our handler - that is just the Rebus message loop...
-            services.AddHostedHandler((s, c) =>
-            {
-                s.UseRebus();
-                return Task.CompletedTask;
-            });
+            services.AddHostedHandler((s, c) => Task.CompletedTask);
 
         }
 

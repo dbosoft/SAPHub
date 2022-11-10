@@ -14,8 +14,8 @@ namespace SAPHub.ConnectorModule
     public class SAPConnectionFactory
     {
         private readonly IConfiguration _configuration;
-        private readonly Func<ILogger, IFieldMapper, IRfcRuntime> _runtimeFactory;
-        public SAPConnectionFactory(IConfiguration configuration, Func<ILogger, IFieldMapper, IRfcRuntime> runtimeFactory)
+        private readonly Func<ILogger, IFieldMapper, RfcRuntimeOptions, IRfcRuntime> _runtimeFactory;
+        public SAPConnectionFactory(IConfiguration configuration, Func<ILogger, IFieldMapper, RfcRuntimeOptions, IRfcRuntime> runtimeFactory)
         {
             _configuration = configuration;
             _runtimeFactory = runtimeFactory;
