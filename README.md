@@ -10,6 +10,10 @@ Beside of cloning this repo please consider following requirements:
   It is strongly recommended to use at least Visual Studio 2019 16.8.4 to build/run the applications.   
   If you would like to try the docker or azure integration also the docker/azure tools have to be installed.
 
+* **.NET SDK 6.0 (x64)**  
+  If you have no Visual Studio installed you will need at least a standalone .NET 6.0 SDK. You can obtain the .NET SDK 6.0 x64 from here:   
+  https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
+
 * **SAP RFC SDK**  
   Please note that to build and run this project you have to download the SAP Netweaver RFC SDK from the SAP Support Portal.
   We recommend to use the [Setup Script](#Quickstart) to download the SDK.
@@ -19,8 +23,10 @@ Beside of cloning this repo please consider following requirements:
   You have to download both the Windows_X64 and Linux_x64 Netweaver RFC SDK binaries.
   Copy them to repos nwrfcsdk directory.
 
+
 * **Azure account**  
   To run only locally no azure account is required. However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) or to use the [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
+
 
 # Usage
 This sample uses [Hosuto](https://github.com/dbosoft/Hosuto) for building microservices that can be either combined in one process or run standalone. 
