@@ -71,7 +71,7 @@ For swagger UI open http://localhost:5000/api/swagger.
 
 ### SAPHub.ApiEndpoint
   
-The API Endpoint runs only the API Module in a aspnetcore 5.0 environment. You can host it in a container or on a hyperscaler like AWS/Azure. 
+The API Endpoint runs only the API Module in a aspnetcore environment. You can host it in a container or on a hyperscaler like AWS/Azure. 
 To communicate with the SAP Connector Module it requires a message exchange system to be set up. To scale horizontally you have to set up a Cosmos DB (see below).
 
 **Quickstart:**  
