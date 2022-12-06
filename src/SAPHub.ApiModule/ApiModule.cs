@@ -76,16 +76,22 @@ namespace SAPHub.ApiModule
                     {
                         x.TypeBased()
                             .Map(typeof(GetCompanyCodesCommand), QueueNames.SAPConnector)
-                            .Map(typeof(GetCompanyCodeCommand), QueueNames.SAPConnector);
+                            .Map(typeof(GetCompanyCodeCommand), QueueNames.SAPConnector)
+                            .Map<OperationStatusEvent>(QueueNames.Api);
+                        
                     })
                     .Options(x =>
                     {
                         x.SimpleRetryStrategy();
                         x.SetNumberOfWorkers(5);
                     })
+                    .DataBus(ds => sp.GetRequiredService<IRebusDataBusConfigurer>()
+                        .Configure(ds)
+                    )
                     .Subscriptions(s => sp.GetRequiredService<IRebusSubscriptionConfigurer>().Configure(s))
                     .Serialization(x => x.UseNewtonsoftJson(new JsonSerializerSettings
                         { TypeNameHandling = TypeNameHandling.None }))
+                    .Timeouts(cfg => sp.GetRequiredService<IRebusTimeoutConfigurer>().Configure(cfg))
                     .Logging(x => x.ColoredConsole());
 
             }, onCreated: bus => bus.Subscribe(typeof(OperationStatusEvent)));

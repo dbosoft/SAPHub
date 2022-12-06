@@ -27,13 +27,14 @@ namespace SAPHub
         {
             //setup shared ServiceProvider
             var services = new ServiceCollection()
-                .AddTransportSelector()  // chooses Rebus transport by configuration
+                .AddRebusSelectors()  // chooses Rebus transport by configuration
                 .AddStateDb();           // required for state store in API module
 
             // set default Rebus transport to inmemory
             var staticSettings = new Dictionary<string,string>
             {
-                ["bus:type"] ="inmemory"
+                ["bus:type"] ="inmemory",
+                ["databus:type"] ="inmemory"
             };
 
             // create ModulesHosts and host SAPConnector module

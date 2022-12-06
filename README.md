@@ -25,7 +25,9 @@ Beside of cloning this repo please consider following requirements:
 
 
 * **Azure account**  
-  To run only locally no azure account is required. However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) or to use the [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
+  To run only locally no azure account is required. 
+* However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) 
+* or to use [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) or Azure Storage account you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
 
 
 # Usage
@@ -181,11 +183,13 @@ The following settings are required/supported in the apps:
 * SAPHub.Server:
   - SAP Connection (required)
   - Message Exchange (optional)
+  - Data Exchange (optional)
   - CosmosDb (optional)
   - URL endpoints (optional)
 
 * SAPHub.ApiEndpoint:
   - Message Exchange (required)
+  - Data Exchange (required)
   - CosmosDb (optional, required to scale)
   - URL endpoints (required)
 
@@ -194,6 +198,7 @@ The following settings are required/supported in the apps:
 
 * SAPHub.SAPConnector:
   - Message Exchange (required)
+  - Data Exchange (required)
   - SAP Connection (required)
 
 ### URL Endpoint configuration
@@ -254,6 +259,14 @@ The API Module and the SAP Connector module communicate asynchronously via a mes
   { "bus" : { "type" : "inmemory" } }
   ``` 
 
+- **Azure Storage Account**  
+  Uses Azure Storage Account Queues as message exchange.
+
+  **Configuration**:
+
+  ``` json
+  { "bus" : { "type" : "azurestorage", "connectionstring": "" } }
+  ``` 
 
 - **Azure Service Bus**  
   Uses a Azure Service Bus as message exchange. 
@@ -272,6 +285,39 @@ The API Module and the SAP Connector module communicate asynchronously via a mes
   ``` json
   { "bus" : { "type" : "rabbitmq", "connectionstring": "" } }
   ``` 
+
+### Data Exchanges
+To transfer large data (results) between the API module and the SAP connector a data exchange is required. The following data exchanges are supported:
+
+- **In-Memory**  
+  Supports only the communication between modules hosted in same process.
+
+  The in-memory exchange is automatically used in the SAPHub.Server app and only makes sense if you run one single instance of SAPHub.Server.
+
+  **Configuration**:
+
+  ``` json
+  { "databus" : { "type" : "inmemory" } }
+  ``` 
+
+- **Azure Storage Account**  
+  Uses Azure Storage Account Blobs as data exchange.
+
+  **Configuration**:
+
+  ``` json
+  { "databus" : { "type" : "azurestorage", "connectionstring": "", "container": "saphub" } }
+  ``` 
+
+- **File System**  
+  Uses a path on the filesystem as data exchange (makes only sense if SAP Connector and API Module could access the path.
+
+  **Configuration**:
+
+  ``` json
+  { "databus" : { "type" : "filesystem", "path": "\\\\somehost\\some_share" } }
+  ``` 
+
 
 ### Azure Cosmos DB
 To scale out the API Module (by starting multiple SAPHub.APIEndpoint or SAPHub.Server apps) you have to enable the Azure Cosmos DB as shared DB storage for the API endpoints. 
