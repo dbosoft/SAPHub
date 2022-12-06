@@ -26,8 +26,7 @@ Beside of cloning this repo please consider following requirements:
 
 * **Azure account**  
   To run only locally no azure account is required. 
-* However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) 
-* or to use [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) or Azure Storage account you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
+  However to scale out API module with [CosmosDB](https://azure.microsoft.com/de-de/services/cosmos-db/) or to use [Azure Service Bus](https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-messaging-overview) or Azure Storage account you require a azure account ([free accounts available](https://azure.microsoft.com/en-us/free) for dev purposes).
 
 
 # Usage
