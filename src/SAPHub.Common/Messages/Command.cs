@@ -1,4 +1,5 @@
 ﻿using System;
+using Rebus.DataBus;
 
 namespace SAPHub.Messages
 {
@@ -9,7 +10,7 @@ namespace SAPHub.Messages
 
         public OperationStatus Status { get; set; }
 
-        public string ResultData { get; set; }
+        public DataBusAttachment Attachment { get; set; }
         public string ResultType { get; set; }
 
         public string StatusMessage { get; set; }

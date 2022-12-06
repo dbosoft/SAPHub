@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System;
+using Microsoft.Extensions.Configuration;
 using Rebus.Config;
 using Rebus.Persistence.InMem;
 using Rebus.Subscriptions;
@@ -6,23 +7,43 @@ using SAPHub.Bus;
 
 namespace SAPHub.MessageBus
 {
-    public class InMemorySubscriptionConfigurer : IRebusSubscriptionConfigurer
+    public class SubscriptionStoreSelector : IRebusSubscriptionConfigurer
     {
-        private readonly IConfiguration _configuration;
         private readonly InMemorySubscriberStore _store;
-
-        public InMemorySubscriptionConfigurer(InMemorySubscriberStore store, IConfiguration configuration)
+        private readonly string _busType;
+        private readonly string _connectionString;
+        public SubscriptionStoreSelector(InMemorySubscriberStore store, IConfiguration configuration)
         {
             _store = store;
-            _configuration = configuration;
+
+            _busType = configuration["bus:type"];
+            _connectionString = configuration["bus:connectionstring"]; 
+
+            if (_busType == null)
+                throw new InvalidOperationException("Missing configuration entry for bus::type. Configure a valid bus type (inmemory,rabbitmq,azurestorage,azureservicebus");
+
+            switch (_busType)
+            {
+                case "azurestorage":
+                case "azureservicebus":
+                case "rabbitmq":
+                case "inmemory": return;
+
+            }
 
         }
 
         public void Configure(StandardConfigurer<ISubscriptionStorage> subscriberStore)
         {
-            var busType = _configuration["bus:type"];
-            if(busType== "inmemory")
-                subscriberStore.StoreInMemory(_store);
+            switch (_busType)
+            {
+                case "inmemory":
+                    subscriberStore.StoreInMemory(_store);
+                    break;
+                case "azurestorage":
+                    subscriberStore.StoreInAzureTables(_connectionString, automaticallyCreateTable: true);
+                    break;
+            }
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class QueueNames
     {
-        public const string SAPConnector = "SAPConnectorModule";
-        public const string Api = "ApiModule";
+        public const string SAPConnector = "sapconnector";
+        public const string Api = "apimodule";
     }
 }

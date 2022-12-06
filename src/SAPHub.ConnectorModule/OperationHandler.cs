@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -35,7 +36,7 @@ namespace SAPHub.ConnectorModule
             }
 
             var result = await HandleOperation(message);
-
+            
             //ok, finished, now send result back to client
             var statusEvent = new OperationStatusEvent
             {
@@ -44,17 +45,27 @@ namespace SAPHub.ConnectorModule
                 Status = OperationStatus.Completed
             };
 
-            //Remarks if you use that for you own data: 
-            //keep in mind that data will be included in entire message. 
-            //Message systems typical restrict message size, so you may have to separate result 
-            //and data. This can also be achieved with Rebus but would require a additional storage. 
+            //attach result to database
+            //this avoids sending the entire data over the message queue as 
+            //it is typical restricted in message size. 
+            //The databus is a special storage to transport the data in parallel
+
             if (result != null)
             {
                 var resultArray = result.ToArray();
                 var firstEntry = resultArray.FirstOrDefault();
                 if (firstEntry != null)
                 {
-                    statusEvent.ResultData = JsonConvert.SerializeObject(resultArray, Formatting.None);
+                    using var jsonStream = new MemoryStream();
+
+                    await using var writer = new StreamWriter(jsonStream);
+                    using var jsonWriter = new JsonTextWriter(writer);
+                    var ser = new JsonSerializer();
+                    ser.Serialize(jsonWriter, resultArray);
+                    await jsonWriter.FlushAsync();
+                    jsonStream.Seek(0, SeekOrigin.Begin);
+
+                    statusEvent.Attachment = await _bus.Advanced.DataBus.CreateAttachment(jsonStream);
                     statusEvent.ResultType = firstEntry.GetType().AssemblyQualifiedName;
 
                 }

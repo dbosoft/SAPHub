@@ -8,7 +8,10 @@
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
+    <PackageReference Include="Rebus.AzureBlobs" Version="0.6.0" />
+    <PackageReference Include="Rebus.AzureQueues" Version="3.0.0" />
     <PackageReference Include="Rebus.AzureServiceBus" Version="9.1.0" />
+    <PackageReference Include="Rebus.AzureTables" Version="0.0.4" />
     <PackageReference Include="Rebus.RabbitMq" Version="7.4.2" />
   </ItemGroup>
 

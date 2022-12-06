@@ -8,13 +8,12 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Rebus.Config;
 using Rebus.Handlers;
-using Rebus.Persistence.InMem;
 using Rebus.Retry.Simple;
+using Rebus.Routing.TypeBased;
 using Rebus.Serialization.Json;
-using Rebus.ServiceProvider;
 using SAPHub.Bus;
 using SAPHub.ConnectorModule.CommandHandlers;
-using Exception = System.Exception;
+using SAPHub.Messages;
 
 namespace SAPHub.ConnectorModule
 {
@@ -34,20 +33,24 @@ namespace SAPHub.ConnectorModule
             services.AddRebus(configurer =>
             {
                 return configurer
+                    .Routing(x=> x.TypeBased().Map<OperationStatusEvent>(QueueNames.Api))
                     .Transport(t =>
                         sp.GetRequiredService<IRebusTransportConfigurer>().Configure(t, QueueNames.SAPConnector))
-                    
+
                     .Options(x =>
                     {
-                        x.SimpleRetryStrategy(maxDeliveryAttempts:1,
+                        x.SimpleRetryStrategy(maxDeliveryAttempts: 1,
                             secondLevelRetriesEnabled: true);
-                        
+
                         x.SetNumberOfWorkers(2); // restrict to 2 workers for each Instance
                     })
+                    .DataBus(ds => sp.GetRequiredService<IRebusDataBusConfigurer>()
+                        .Configure(ds)
+                    )
                     .Subscriptions(s => sp.GetRequiredService<IRebusSubscriptionConfigurer>().Configure(s))
                     .Serialization(x => x.UseNewtonsoftJson(new JsonSerializerSettings
-                        {TypeNameHandling = TypeNameHandling.None}))
-                    .Timeouts(cfg => cfg.StoreInMemory())
+                        { TypeNameHandling = TypeNameHandling.None }))
+                    .Timeouts(cfg => sp.GetRequiredService<IRebusTimeoutConfigurer>().Configure(cfg))
                     .Logging(x => x.ColoredConsole());
             });
 

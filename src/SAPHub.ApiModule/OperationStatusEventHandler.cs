@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Rebus.Handlers;
@@ -32,8 +33,14 @@ namespace SAPHub.ApiModule
             
             op.Status = message.Status;
             op.StatusMessage = message.StatusMessage;
-            op.ResultData = message.ResultData;
             op.ResultType = message.ResultType;
+
+            if (message.Attachment != null)
+            {
+                await using var dataStream = await message.Attachment.OpenRead();
+                using var reader = new StreamReader(dataStream);
+                op.ResultData = await reader.ReadToEndAsync();
+            }
 
             await _repository.UpdateAsync(op);
         }

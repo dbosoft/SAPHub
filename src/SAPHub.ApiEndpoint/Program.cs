@@ -19,7 +19,7 @@ namespace SAPHub
         {
             //setup shared ServiceProvider
             var services = new ServiceCollection()
-                .AddTransportSelector()  // chooses Rebus transport by configuration
+                .AddRebusSelectors()  // chooses Rebus transport by configuration
                 .AddStateDb();           // required for state store in API module 
 
             // create ModulesHosts with ASPNetCore enabled and host API module

@@ -22,7 +22,7 @@ namespace SAPHub.SAPConnector
         {
             //setup shared ServiceProvider
             var services = new ServiceCollection()
-                .AddTransportSelector();    // chooses Rebus transport by configuration
+                .AddRebusSelectors();    // chooses Rebus transport by configuration
 
             // create ModulesHosts and host SAPConnector module
             return ModulesHost.CreateDefaultBuilder(args)

@@ -28,10 +28,11 @@ namespace SAPHub.MessageBus
             _connectionString = configuration["bus:connectionstring"]; 
 
             if (_busType == null)
-                throw new InvalidOperationException("Missing configuration entry for bus::type. Configure a valid bus type (inmemory,rabbitmq,azureservicebus");
+                throw new InvalidOperationException("Missing configuration entry for bus::type. Configure a valid bus type (inmemory,rabbitmq,azurestorage,azureservicebus");
 
             switch (_busType)
             {
+                case "azurestorage":
                 case "azureservicebus":
                 case "rabbitmq":
                     if (_connectionString == null)
@@ -42,7 +43,7 @@ namespace SAPHub.MessageBus
 
             }
 
-            throw new InvalidOperationException($"Invalid bus type: {_busType} .Configure a valid bus type (inmemory,rabbitmq,azureservicebus).");
+            throw new InvalidOperationException($"Invalid bus type: {_busType} .Configure a valid bus type (inmemory,rabbitmq,azurestorage,azureservicebus).");
 
         }
 
@@ -51,6 +52,10 @@ namespace SAPHub.MessageBus
             
             switch (_busType)
             {
+                case "azurestorage":
+                    configurer.UseAzureStorageQueuesAsOneWayClient(_connectionString);
+                        
+                    break;
                 case "azureservicebus":
                     configurer.UseAzureServiceBusAsOneWayClient(_connectionString);
                         
@@ -72,6 +77,10 @@ namespace SAPHub.MessageBus
         {
             switch (_busType)
             {
+                case "azurestorage":
+                    configurer.UseAzureStorageQueues(_connectionString, queueName);
+                        
+                    break;
                 case "azureservicebus":
                     configurer.UseAzureServiceBus(_connectionString,queueName);
                     break;
