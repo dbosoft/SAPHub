@@ -1,24 +1,23 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SAPHub.StateDb.Model;
 
-namespace SAPHub.StateDb
+namespace SAPHub.StateDb;
+
+public class StateStoreContext : DbContext
 {
-    public class StateStoreContext : DbContext
+    private readonly IModelBuilder<StateStoreContext> _modelBuilder;
+
+    public StateStoreContext(DbContextOptions<StateStoreContext> options, IModelBuilder<StateStoreContext> modelBuilder)
+        : base(options)
     {
-        private readonly IModelBuilder<StateStoreContext> _modelBuilder;
+        _modelBuilder = modelBuilder;
+    }
 
-        public StateStoreContext(DbContextOptions<StateStoreContext> options, IModelBuilder<StateStoreContext> modelBuilder)
-            : base(options)
-        {
-            _modelBuilder = modelBuilder;
-        }
-
-        public DbSet<OperationModel> Operations { get; set; }
+    public DbSet<OperationModel> Operations { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            _modelBuilder.ConfigureModel(modelBuilder);
-        }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        _modelBuilder.ConfigureModel(modelBuilder);
     }
 }

@@ -1,49 +1,46 @@
 using System;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using Rebus.Config;
 using Rebus.Persistence.InMem;
 using Rebus.Timeouts;
-using Rebus.Transport.InMem;
 using SAPHub.Bus;
 
-namespace SAPHub.MessageBus
+namespace SAPHub.MessageBus;
+
+public class RebusTimeoutSelector : IRebusTimeoutConfigurer
 {
-    public class RebusTimeoutSelector : IRebusTimeoutConfigurer
+    private readonly string _busType;
+
+    public RebusTimeoutSelector(IConfiguration configuration)
     {
-        private readonly string _busType;
 
-        public RebusTimeoutSelector(IConfiguration configuration)
-        {
-
-            _busType = configuration["bus:type"];
+        _busType = configuration["bus:type"];
             
-            switch (_busType)
-            {
-                case "azurestorage":
-                case "azureservicebus":
-                case "rabbitmq":
-                case "inmemory": return;
-
-            }
-
-            throw new InvalidOperationException($"Invalid bus type: {_busType} .Configure a valid bus type (inmemory,rabbitmq,azurestorage,azureservicebus).");
+        switch (_busType)
+        {
+            case "azurestorage":
+            case "azureservicebus":
+            case "rabbitmq":
+            case "inmemory": return;
 
         }
 
+        throw new InvalidOperationException($"Invalid bus type: {_busType} .Configure a valid bus type (inmemory,rabbitmq,azurestorage,azureservicebus).");
+
+    }
+
          
-        public void Configure(StandardConfigurer<ITimeoutManager> configurer)
+    public void Configure(StandardConfigurer<ITimeoutManager> configurer)
+    {
+        switch (_busType)
         {
-            switch (_busType)
-            {
-                case "azurestorage":
-                case "azureservicebus":
-                case "rabbitmq":
-                    return;  // these all have native timeout support
-                case "inmemory": 
-                    configurer.StoreInMemory();
-                    return;
-            }
+            case "azurestorage":
+            case "azureservicebus":
+            case "rabbitmq":
+                return;  // these all have native timeout support
+            case "inmemory": 
+                configurer.StoreInMemory();
+                return;
         }
     }
 }

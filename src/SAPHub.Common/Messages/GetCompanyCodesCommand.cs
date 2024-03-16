@@ -1,7 +1,3 @@
-﻿namespace SAPHub.Messages
-{
-    public class GetCompanyCodesCommand : OperationCommand
-    {
+﻿namespace SAPHub.Messages;
 
-    }
-}
+public class GetCompanyCodesCommand : OperationCommand;

@@ -1,10 +1,9 @@
 ﻿using Rebus.Config;
 using Rebus.Subscriptions;
 
-namespace SAPHub.Bus
+namespace SAPHub.Bus;
+
+public interface IRebusSubscriptionConfigurer
 {
-    public interface IRebusSubscriptionConfigurer
-    {
-        void Configure(StandardConfigurer<ISubscriptionStorage> configure);
-    }
+    void Configure(StandardConfigurer<ISubscriptionStorage> configure);
 }

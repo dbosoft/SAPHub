@@ -5,34 +5,25 @@ using System.Threading.Tasks;
 using SAPHub.ApiModule.ApiModel;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace SAPHub.ApiModule.Controllers
+namespace SAPHub.ApiModule.Controllers;
+
+[ApiController]
+[Route("[controller]")]
+public class OperationsController(IOperationService operationService) : ControllerBase
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class OperationsController : ControllerBase
+    [HttpGet]
+    [SwaggerOperation(OperationId = "Operation_List")]
+    public Task<IEnumerable<Operation>> Get()
     {
-        private readonly IOperationService _operationService;
-
-
-        public OperationsController(IOperationService operationService)
-        {
-            _operationService = operationService;
-        }
-
-        [HttpGet]
-        [SwaggerOperation(OperationId = "Operation_List")]
-        public Task<IEnumerable<ApiModel.Operation>> Get()
-        {
-            return _operationService.GetAll();
-        }
-
-        [HttpGet("{id}")]
-        [SwaggerOperation(OperationId = "Operation_Get")]
-        public Task<Operation> Get(Guid id)
-        {
-            return _operationService.Get(id);
-        }
-
-
+        return operationService.GetAll();
     }
+
+    [HttpGet("{id}")]
+    [SwaggerOperation(OperationId = "Operation_Get")]
+    public Task<Operation> Get(Guid id)
+    {
+        return operationService.Get(id);
+    }
+
+
 }

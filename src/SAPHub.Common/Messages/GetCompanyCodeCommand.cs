@@ -1,7 +1,6 @@
-﻿namespace SAPHub.Messages
+﻿namespace SAPHub.Messages;
+
+public class GetCompanyCodeCommand : OperationCommand
 {
-    public class GetCompanyCodeCommand : OperationCommand
-    {
-        public string Code { get; set; }
-    }
+    public string Code { get; set; }
 }

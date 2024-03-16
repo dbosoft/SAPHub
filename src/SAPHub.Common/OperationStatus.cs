@@ -1,10 +1,9 @@
-﻿namespace SAPHub
+﻿namespace SAPHub;
+
+public enum OperationStatus
 {
-    public enum OperationStatus
-    {
-        Queued,
-        Running,
-        Failed,
-        Completed,
-    }
+    Queued,
+    Running,
+    Failed,
+    Completed
 }

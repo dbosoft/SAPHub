@@ -5,9 +5,11 @@ using Rebus.Config;
 using Rebus.Subscriptions;
 using SAPHub.MessageBus;
 
+
 /// <summary>
 /// Configuration extensions for subcriptions storage in Azure Cosmos Db Tables or Azure Table Storage
 /// </summary>
+// ReSharper disable once CheckNamespace
 public static class ConfigAzureTablesSubscriptionConfigurationExtensions
 {
     /// <summary>
@@ -19,13 +21,14 @@ public static class ConfigAzureTablesSubscriptionConfigurationExtensions
     /// <param name="isCentralized">True if this subscription storage is centralized (i.e. if subscribers can register themselves directly)</param>
     /// <param name="automaticallyCreateTable">True if the storage table should be created if not exist</param>
     /// <exception cref="ArgumentNullException">Thrown when not all mandatory parameters are provided</exception>
+    // ReSharper disable once UnusedMember.Global
     public static void StoreInAzureTables(this StandardConfigurer<ISubscriptionStorage> configurer,
         string connectionString, string tableName = "RebusSubscriptions", bool isCentralized = false,
         bool automaticallyCreateTable = false)
     {
         if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
 
-        configurer.StoreInAzureTables(new TableServiceClient(tableName), tableName, isCentralized,
+        StoreInAzureTables(configurer, new TableServiceClient(tableName), tableName, isCentralized,
             automaticallyCreateTable);
     }
 
@@ -46,7 +49,7 @@ public static class ConfigAzureTablesSubscriptionConfigurationExtensions
         if (serviceEndpoint == null) throw new ArgumentNullException(nameof(serviceEndpoint));
         if (credential == null) throw new ArgumentNullException(nameof(credential));
 
-        configurer.StoreInAzureTables(new TableServiceClient(serviceEndpoint, credential), tableName, isCentralized,
+        StoreInAzureTables(configurer, new TableServiceClient(serviceEndpoint, credential), tableName, isCentralized,
             automaticallyCreateTable);
     }
 
@@ -66,7 +69,7 @@ public static class ConfigAzureTablesSubscriptionConfigurationExtensions
         if (tableServiceClient == null) throw new ArgumentNullException(nameof(tableServiceClient));
         if (tableName == null) throw new ArgumentNullException(nameof(tableName));
 
-        configurer.StoreInAzureTables(tableServiceClient.GetTableClient(tableName), isCentralized,
+        StoreInAzureTables(configurer, tableServiceClient.GetTableClient(tableName), isCentralized,
             automaticallyCreateTable);
     }
 
@@ -84,7 +87,7 @@ public static class ConfigAzureTablesSubscriptionConfigurationExtensions
         if (configurer == null) throw new ArgumentNullException(nameof(configurer));
         if (tableClient == null) throw new ArgumentNullException(nameof(tableClient));
 
-        configurer.Register(context =>
+        configurer.Register(_ =>
             new AzureTablesSubscriptionStorage(tableClient, isCentralized, automaticallyCreateTable));
     }
 }

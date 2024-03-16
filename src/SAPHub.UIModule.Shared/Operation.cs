@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace SAPHub.UI.Shared
+namespace SAPHub.UI.Shared;
+
+public class Operation
 {
-    public class Operation
-    {
-        public Guid Id { get; set; }
-        public OperationStatus Status { get; set; }
-    }
+    public Guid Id { get; set; }
+    public OperationStatus Status { get; set; }
 }

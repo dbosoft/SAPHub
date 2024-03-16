@@ -1,10 +1,9 @@
 using Rebus.Config;
 using Rebus.Timeouts;
 
-namespace SAPHub.Bus
+namespace SAPHub.Bus;
+
+public interface IRebusTimeoutConfigurer
 {
-    public interface IRebusTimeoutConfigurer
-    {
-        void Configure(StandardConfigurer<ITimeoutManager> configurer);
-    }
+    void Configure(StandardConfigurer<ITimeoutManager> configurer);
 }

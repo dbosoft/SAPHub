@@ -1,11 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace SAPHub.StateDb
+namespace SAPHub.StateDb;
+
+// ReSharper disable once UnusedTypeParameter
+public interface IDbContextConfigurer<TContext>
 {
-    public interface IDbContextConfigurer<TContext>
-    {
-        void Configure(DbContextOptionsBuilder options);
-    }
-
-
+    void Configure(DbContextOptionsBuilder options);
 }

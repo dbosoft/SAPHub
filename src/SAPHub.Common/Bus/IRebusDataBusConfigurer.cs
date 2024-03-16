@@ -1,10 +1,9 @@
 using Rebus.Config;
 using Rebus.DataBus;
 
-namespace SAPHub.Bus
+namespace SAPHub.Bus;
+
+public interface IRebusDataBusConfigurer
 {
-    public interface IRebusDataBusConfigurer
-    {
-        void Configure(StandardConfigurer<IDataBusStorage> configurer);
-    }
+    void Configure(StandardConfigurer<IDataBusStorage> configurer);
 }

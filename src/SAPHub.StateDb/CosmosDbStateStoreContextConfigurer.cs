@@ -2,30 +2,29 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace SAPHub.StateDb
+namespace SAPHub.StateDb;
+
+internal class CosmosDbStateStoreContextConfigurer : IDbContextConfigurer<StateStoreContext>
 {
-    internal class CosmosDbStateStoreContextConfigurer : IDbContextConfigurer<StateStoreContext>
+    private readonly string _connectionstring;
+    private readonly string _databaseName;
+
+    public CosmosDbStateStoreContextConfigurer(IConfiguration configuration)
     {
-        private readonly string _connectionstring;
-        private readonly string _databaseName;
+        _connectionstring = configuration["cosmosdb:connectionstring"];
 
-        public CosmosDbStateStoreContextConfigurer(IConfiguration configuration)
-        {
-            _connectionstring = configuration["cosmosdb:connectionstring"];
+        if (_connectionstring == null)
+            throw new InvalidOperationException("Missing configuration entry for cosmosdb::connectionstring.");
 
-            if (_connectionstring == null)
-                throw new InvalidOperationException("Missing configuration entry for cosmosdb::connectionstring.");
+        _databaseName = configuration["cosmosdb:databaseName"];
 
-            _databaseName = configuration["cosmosdb:databaseName"];
+        if (_databaseName == null)
+            throw new InvalidOperationException("Missing configuration entry for cosmosdb::databaseName.");
 
-            if (_databaseName == null)
-                throw new InvalidOperationException("Missing configuration entry for cosmosdb::databaseName.");
+    }
 
-        }
-
-        public void Configure(DbContextOptionsBuilder options)
-        {
-            options.UseCosmos(_connectionstring, _databaseName);
-        }
+    public void Configure(DbContextOptionsBuilder options)
+    {
+        options.UseCosmos(_connectionstring, _databaseName);
     }
 }

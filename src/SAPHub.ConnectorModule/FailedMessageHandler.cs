@@ -11,43 +11,42 @@ using Rebus.Retry.Simple;
 using Rebus.Transport;
 using SAPHub.Messages;
 
-namespace SAPHub.ConnectorModule
+namespace SAPHub.ConnectorModule;
+
+[UsedImplicitly]
+public class FailedMessageHandler<T> : IHandleMessages<T> where T: IFailed<OperationCommand>
 {
-    [UsedImplicitly]
-    public class FailedMessageHandler<T> : IHandleMessages<T> where T: IFailed<OperationCommand>
+    private readonly IBus _bus;
+
+    public FailedMessageHandler(IBus bus)
     {
-        private readonly IBus _bus;
+        _bus = bus;
+    }
 
-        public FailedMessageHandler(IBus bus)
+
+    public async Task Handle(T failed)
+    {
+        var doNotDefer = failed.Exceptions.Any(x => x.Type == nameof(RfcConfigMissingException));
+
+        const int maxDeferCount = 3;
+        var deferCount = Convert.ToInt32(failed.Headers.GetValueOrDefault(Headers.DeferCount));
+        if (deferCount >= maxDeferCount || doNotDefer)
         {
-            _bus = bus;
-        }
 
+            await _bus.Advanced.TransportMessage.Deadletter($"Failed after {deferCount} deferrals\n\n{failed.ErrorDescription}");
 
-        public async Task Handle(T failed)
-        {
-            var doNotDefer = failed.Exceptions.Any(x => x is RfcConfigMissingException);
+            var message = failed.Exceptions.FirstOrDefault()?.Message ?? failed.ErrorDescription;
 
-            const int maxDeferCount = 3;
-            var deferCount = Convert.ToInt32(failed.Headers.GetValueOrDefault(Headers.DeferCount));
-            if (deferCount >= maxDeferCount || doNotDefer)
+            using var scope = new RebusTransactionScope();
+            await _bus.Publish(new OperationStatusEvent
             {
-
-                await _bus.Advanced.TransportMessage.Deadletter($"Failed after {deferCount} deferrals\n\n{failed.ErrorDescription}");
-
-                var message = failed.Exceptions.FirstOrDefault()?.Message ?? failed.ErrorDescription;
-
-                using var scope = new RebusTransactionScope();
-                await _bus.Publish(new OperationStatusEvent
-                {
-                    Id = Guid.NewGuid(),
-                    OperationId = failed.Message.Id,
-                    Status = OperationStatus.Failed,
-                    StatusMessage = message
-                });
-                await scope.CompleteAsync().ConfigureAwait(false);
-            }
-            await _bus.Advanced.TransportMessage.Defer(TimeSpan.FromSeconds(10));
+                Id = Guid.NewGuid(),
+                OperationId = failed.Message.Id,
+                Status = OperationStatus.Failed,
+                StatusMessage = message
+            });
+            await scope.CompleteAsync().ConfigureAwait(false);
         }
+        await _bus.Advanced.TransportMessage.Defer(TimeSpan.FromSeconds(10));
     }
 }

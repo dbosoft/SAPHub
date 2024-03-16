@@ -2,40 +2,38 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
 
-namespace SAPHub
+namespace SAPHub;
+
+public class EndpointResolver
 {
-    public class EndpointResolver
+    private readonly Dictionary<string,string> _endpoints = new();
+
+    public EndpointResolver(IConfiguration configuration)
     {
-        private readonly Dictionary<string,string> _endpoints = new Dictionary<string, string>();
+        configuration.Bind("endpoints",_endpoints);
 
-        public EndpointResolver(IConfiguration configuration)
+    }
+
+    public Uri GetEndpoint(string name)
+    {
+        Uri endpoint = null;
+        var isDefault = false;
+        if (_endpoints.TryGetValue(name, out var endpointString))
         {
-            configuration.Bind("endpoints",_endpoints);
-
+            endpoint = endpointString.StartsWith("http")
+                ? new Uri(endpointString, UriKind.Absolute)
+                : new Uri(endpointString, UriKind.Relative);
         }
 
-        public Uri GetEndpoint(string name)
+        if (endpoint == null)
         {
-            Uri endpoint = null;
-            var isDefault = false;
-            if (_endpoints.ContainsKey(name))
-            {
-                var endpointString = _endpoints[name];
-                endpoint = endpointString.StartsWith("http")
-                    ? new Uri(endpointString, UriKind.Absolute)
-                    : new Uri(endpointString, UriKind.Relative);
-            }
-
-            if (endpoint == null)
-            {
-                endpoint = new Uri(_endpoints["default"]);
-                isDefault = true;
-            }
-
-            if (endpoint.IsAbsoluteUri || isDefault) return endpoint;
-
-            var defaultEndpoint = new Uri(_endpoints["default"]);
-            return new Uri(defaultEndpoint, endpoint);
+            endpoint = new Uri(_endpoints["default"]);
+            isDefault = true;
         }
+
+        if (endpoint.IsAbsoluteUri || isDefault) return endpoint;
+
+        var defaultEndpoint = new Uri(_endpoints["default"]);
+        return new Uri(defaultEndpoint, endpoint);
     }
 }

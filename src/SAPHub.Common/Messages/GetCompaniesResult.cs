@@ -1,8 +1,7 @@
-﻿namespace SAPHub.Messages
+﻿namespace SAPHub.Messages;
+
+public class CompanyCodeData
 {
-    public class CompanyCodeData
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-    }
+    public string Code { get; set; }
+    public string Name { get; set; }
 }
