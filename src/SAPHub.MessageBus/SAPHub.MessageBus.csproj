@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="7.0.0" />
-    <PackageReference Include="Rebus.AzureBlobs" Version="0.6.0" />
-    <PackageReference Include="Rebus.AzureQueues" Version="3.0.0" />
-    <PackageReference Include="Rebus.AzureServiceBus" Version="9.1.0" />
-    <PackageReference Include="Rebus.AzureTables" Version="0.0.4" />
-    <PackageReference Include="Rebus.RabbitMq" Version="7.4.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.1" />
+    <PackageReference Include="Rebus.AzureBlobs" Version="1.0.1" />
+    <PackageReference Include="Rebus.AzureQueues" Version="4.0.0" />
+    <PackageReference Include="Rebus.AzureServiceBus" Version="10.0.0" />
+    <PackageReference Include="Rebus.AzureTables" Version="1.0.0" />
+    <PackageReference Include="Rebus.RabbitMq" Version="9.0.1" />
   </ItemGroup>
 
   <ItemGroup>

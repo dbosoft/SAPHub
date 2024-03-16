@@ -39,7 +39,7 @@ namespace SAPHub.ConnectorModule
 
                     .Options(x =>
                     {
-                        x.SimpleRetryStrategy(maxDeliveryAttempts: 1,
+                        x.RetryStrategy(maxDeliveryAttempts: 1,
                             secondLevelRetriesEnabled: true);
 
                         x.SetNumberOfWorkers(2); // restrict to 2 workers for each Instance

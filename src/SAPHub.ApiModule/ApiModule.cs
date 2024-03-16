@@ -25,7 +25,6 @@ namespace SAPHub.ApiModule
     /// <summary>
     /// This is the module the SAPHub REST API
     /// </summary>
-    [UsedImplicitly(ImplicitUseTargetFlags.WithMembers)]
     public class ApiModule : WebModule
     {
         public override string Path => _endpointResolver.GetEndpoint("api").ToString();
@@ -82,7 +81,7 @@ namespace SAPHub.ApiModule
                     })
                     .Options(x =>
                     {
-                        x.SimpleRetryStrategy();
+                        x.RetryStrategy();
                         x.SetNumberOfWorkers(5);
                     })
                     .DataBus(ds => sp.GetRequiredService<IRebusDataBusConfigurer>()

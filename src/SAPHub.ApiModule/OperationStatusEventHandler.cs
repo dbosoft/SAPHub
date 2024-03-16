@@ -9,7 +9,6 @@ using SAPHub.StateDb.Model;
 
 namespace SAPHub.ApiModule
 {
-    [UsedImplicitly]
     public class OperationStatusEventHandler : IHandleMessages<OperationStatusEvent>
     {
         private readonly IStateStoreRepository<OperationModel> _repository;

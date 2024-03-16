@@ -30,7 +30,7 @@ namespace SAPHub.MessageBus
         /// <summary>
         /// Gets all subscribers by getting row IDs from the partition named after the given <paramref name="topic"/>
         /// </summary>
-        public async Task<string[]> GetSubscriberAddresses(string topic) {
+        public async Task<IReadOnlyList<string>> GetSubscriberAddresses(string topic) {
             try {
                 var client = await GetTableClient();
                 var items = client.QueryAsync<TableEntity>(s => s.PartitionKey == topic, select: new[] { "PartitionKey", "RowKey" });

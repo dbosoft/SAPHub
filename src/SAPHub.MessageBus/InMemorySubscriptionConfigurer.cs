@@ -38,7 +38,8 @@ namespace SAPHub.MessageBus
             switch (_busType)
             {
                 case "inmemory":
-                    subscriberStore.StoreInMemory(_store);
+                    // since rebus 8.2.2 , the inmemory subscription storage is registered with the inmemory transport
+                    //subscriberStore.StoreInMemory(_store);
                     break;
                 case "azurestorage":
                     subscriberStore.StoreInAzureTables(_connectionString, automaticallyCreateTable: true);

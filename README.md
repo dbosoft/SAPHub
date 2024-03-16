@@ -10,9 +10,9 @@ Beside of cloning this repo please consider following requirements:
   It is strongly recommended to use at least Visual Studio 2019 16.8.4 to build/run the applications.   
   If you would like to try the docker or azure integration also the docker/azure tools have to be installed.
 
-* **.NET SDK 6.0 (x64)**  
-  If you have no Visual Studio installed you will need at least a standalone .NET 6.0 SDK. You can obtain the .NET SDK 6.0 x64 from here:   
-  https://dotnet.microsoft.com/en-us/download/dotnet/6.0 
+* **.NET SDK 8.0 (x64)**  
+  If you have no Visual Studio installed you will need at least a standalone .NET 8.0 SDK. You can obtain the .NET SDK 8.0 x64 from here:   
+  https://dotnet.microsoft.com/en-us/download/dotnet/8.0 
 
 * **SAP RFC SDK**  
   Please note that to build and run this project you have to download the SAP Netweaver RFC SDK from the SAP Support Portal.
